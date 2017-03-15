@@ -49,7 +49,7 @@ Vi
 			cw clear word, delete and enter insert mode
 			yw copy word
 			<number>-yw copy <number> of words
-			0 move to beginning of life
+			0 move to beginning of line
 			D delete to the end of the line
 			<Number>-G move cursor to line <Number>
 			1-G move cursor to beginning of document
@@ -81,8 +81,3 @@ Virtual Box Manager
 		$VBoxManage showvminfo myserver | grep 'Rule'
 	SSH from machine into virtual box
 		$ssh -p <port number> user@127.0.0.1
-Configuration Management with Ansible
-	# Prep the machine
-		install python
-		add ssh keys
-	#TODO
