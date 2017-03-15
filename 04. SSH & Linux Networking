@@ -41,6 +41,7 @@ Networking
 		link partner advertised link modes: as above for partner
 		speed: the maximum transfer rate supported by both the link and partner
 		link detected: is it plugged in?
+	$iwconfig --> configure wireless interfaces
 	$ethtool -s <key1> <value1> <keyn> <valuen> --> configure device (e.g. ethtool -s 
 		speed 100 duplex full)
 	Address Resolution Protocol (ARP) - IPv4 protocol to map network IP address to hardware
