@@ -1,0 +1,88 @@
+Terminal Multiplexer (tmux)
+	Ctrl-B <command> passes commands to tmux as opposed to shell
+		Ctrl-b ? -> Display hotkeys
+		Ctrl-b c -> creates new window
+		Ctrl-b , -> command to rename window
+		Ctrl-b x -> exit current pane, window, session
+		Ctrl-b d -> detach from session
+		Ctrl-b s -> display sessions
+		Ctrl-b [0-9] -> go to window # specified
+		Ctrl-b [p|n] -> cycles through previous or next window
+		Ctrl-b w -> lists windows
+		Ctrl-b % -> splits window vertically
+		Ctrl-b : -> opens command line to pass named commands to tmux
+			example: Ctrl-B : then split-window will split window horizontally
+	Session Management
+		$tmux new -s <mysession>
+			--> create a new session with name <mysession>
+		$Ctrl-B d -> detach from session and return to shell
+		$tmux list-sessions -> list sessions
+		$tmux attach -t <mysession> -> reattach to detached session
+	Navigation
+		Ctrl-b [Arrow Key] --> navigate around panes
+		Ctrl-b [Page Up|Page Down] --> scroll up/down
+	Copy-mode (with vi-keys enabled)
+		Ctrl-b [ --> Enter copy mode
+		Space Bar --> Begin copy selection
+		Enter Key --> Make selection and exit copy-mode
+		Ctrl-b ] --> Paste from paste buffer
+Vi
+	Start in command mode
+		Navigation
+			i enter insert mode
+			Shift-r enter replace mode
+			Shift-a append --> insert mode with cursor at end of line
+			Esc return to command mode
+		Commands
+			dd delete current line of cursor
+			yy copy current line of cursor
+			<number>-yy copy line <number>
+			p paste below cursor line
+			P paste at cursor line
+			j move down line
+			k move up line
+			h move left
+			l move right
+			w move one word to the right
+			b move one word to the left
+			dw delete word
+			cw clear word, delete and enter insert mode
+			yw copy word
+			<number>-yw copy <number> of words
+			0 move to beginning of life
+			D delete to the end of the line
+			<Number>-G move cursor to line <Number>
+			1-G move cursor to beginning of document
+			G move cursor to end of document
+			:w write (save file)
+			:w [filename] --> save to filename
+			:r [filename] --> read text of [filename] into current file
+			:r!date		  --> read date into current file
+			:q quit
+			/<pattern> --> search for pattern in file
+				--> n --> go to next occurence of pattern
+Emacs
+	Default Keybindings
+		Navigation
+			Ctrl-V scroll forward 1 page
+			Meta-V scroll back 1 page
+			Ctrl-F move cursor ahead one character
+			Ctrl-B move cursor back one character
+			Ctrl-N move cursor ahead one line
+			Ctrl-P move cursor back one line
+		Commands
+			Ctrl-G escape current command (get me out of here)
+			Ctrl-U <Integer> multiply next command --> ex. Ctrl-U 8 * prints ********
+			Ctrl-X Ctrl-C exit Emacs
+Virtual Box Manager
+	Set VBox Network settings
+		$VBoxManage modifyvm <myserver> --natpf1 "ssh,tcp,,<port number>,,22"
+	[Optional] Check rules
+		$VBoxManage showvminfo myserver | grep 'Rule'
+	SSH from machine into virtual box
+		$ssh -p <port number> user@127.0.0.1
+Configuration Management with Ansible
+	# Prep the machine
+		install python
+		add ssh keys
+	#TODO

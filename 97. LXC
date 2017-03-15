@@ -1,0 +1,8 @@
+Create container
+	$[sudo] lxc-create -t <type> -n <name>
+		--> ex. <type>=ubuntu <name> mycontainer
+		--> will default to host architecture (e.g. if you're on a Ubuntu x.y.z machine...)
+	$[sudo] lxc-ls --fancy
+		--> See running machines
+	$[sudo] lxc-start -n <name> [-d]
+		--> start machine

@@ -1,0 +1,33 @@
+Ansible
+	0. Requirements
+		1. Local and target machines must have ansible and openssh-server installed. Local
+			machine must be able to ssh into target host.
+		2. Ansible has a default host inventory in /etc/ansible/hosts file
+			This will (commonly) be reconfigured for a local project/playbook
+		3. Privileges
+			a. Many tasks require elevated privileges (ex. sudo). You can either enable a passwordless user on the target machine or...
+			b. use the Ansible vault option by
+				i. include in your playbook yaml:
+					vars_files
+						- secret
+				ii. enable an encrypted secret file and enter a password when prompted
+					$ansible-vault create secret
+					#You can edit this later with ansible-vault edit secrete
+				iii. create a file vault.txt and place password into file
+				iv. Run your playbook with additional arguments as follows
+					$ansible-playbook playbook.yml -u username -i hosts --ask-become-pass --vault-password-file=vault.txt
+				appendix. sample directory layout
+					.
+					|_playbook.yml
+					|_secret
+					|_hosts
+					|_vault.txt
+	1. Executing ad-hoc commands via ansible
+		$ansible <hosts> [-m module]
+			--> execute some module against hosts
+			--> hosts can be either the default /etc/... file or specified directly using
+				the [-i /Path/To/File]
+			--> modules accomplish tasks. Typically there are modules with mirror command-line
+				tools.
+					ex. $ansible <hosts> -m ping --> ping host(s)
+					ex. $ansible <hosts> -m shell -a 'apt-get install tmux' --> execute shell with argument

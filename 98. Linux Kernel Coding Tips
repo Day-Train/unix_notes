@@ -1,0 +1,77 @@
+Style Guide
+	1. Indentation
+		Tabs are 8 characters
+	2. Lines
+		Length of line limit is 80 characters
+	3. Braces and Spaces
+		Opening brace last on line, closing brace on first of line.
+
+			if (x is true) {
+				do this;
+			}
+		Special case: Named functions, opening brace first of line.
+
+			int function(int x)
+			{
+				body of function;
+			}
+		Special case: Single statements do not need braces.
+			
+			if (condition)
+				action();
+		And
+
+			if (condition)
+				do_this();
+			else
+				do_that();
+		3.1 Spaces
+			Use a space after these keywords:
+				if, switch, case, for, do, while
+			Do not add spaces around parenthesized expressions.
+				s = sizeof( struct file); //Don't do!
+			When declaring pointers or functions that return a
+			pointer type, use an adjacent *.
+				char *my_char;
+				char *match_strdup(substring_t *s);
+			Use spaces around binary and ternary operators but
+			not unary operators.
+	4. Naming
+		Don't use mixed case names.
+		Global variables and global functions need descriptive names.
+		No Hungarian notation.
+	5. Typedefs
+	6. Functions
+		Functions should be short and do just one thing, and well.
+		Functions shouldn't exceed 5-10 local variables.
+		Separate functions with one blank line.
+		If a function is exported the export macro for it should follow
+		immediately after the function's closing brace.
+		In function prototypes include parameter names with their data
+		types.
+	7. Centralized exiting of functions
+	8. Commenting
+		Comments should tell what your code does, not explain how.
+			Code should be obvious to follow
+			Also helps down the road if implementation changes
+		Multi-line comments should follow this format:
+			/*
+			 * Text
+			 * Text
+			 * Text
+			 *
+			 * Text
+			 * Text
+			 * Text
+			 * Text
+			 */
+		Except for files in the net/ and drivers/net/ as follows:
+			/* Text - Note no blank first line!
+			 * Text
+			 * Text
+			 *
+			 * Text
+			 * Text
+			 * Text
+			 * Text
+			 */

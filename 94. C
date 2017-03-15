@@ -1,0 +1,26 @@
+5.3 Pointers and Arrays
+	int a[10]; 	// Define an array a of size 10
+	int *pa; 	// Declare a pointer to an integer
+	pa = &a[0]	// Set pa to point to element zero of a
+	x = *pa;	// Copy the contents of a[0] into x
+	pa + 1		// Point to the next element after pa
+	pa + i 		// Point to the element i elements after pa
+	pa - i  	// Point to the element i elements before pa
+	*(pa + 1)	// Refer to the contents of a[1]
+	pa = a;		// Set pa to point to element zero of a, same behaviour as pa = &a[0]
+	pa++;		// Point to the next element after pa
+	char s[] == char * 	// Equivalent as formal parameters in a function definition
+	// Example - following two function declarations are equivalent
+		f(int arr[]) { ... }
+		f(int *arr) { ... }
+	// Can pass part of an array to a function
+	// Example - given an array a:
+		f(&a[2]) ...
+		f(a + 2) ...
+
+5.4 Address Arithmetic
+
+5.5 Character Pointers and Functions
+
+5.6 Pointer Arrays; Pointers to Pointers
+

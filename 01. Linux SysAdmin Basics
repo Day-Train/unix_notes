@@ -1,0 +1,343 @@
+#TODO
+#What does !<command> do in shell?
+#What are restricted commands (rbash) in shell?
+
+What's going on?
+	$top
+	$htop
+	$ps [aux]
+	$netstat [-tupln]
+	$man
+	$cat
+	$echo
+	$idlinu
+	$history
+	$whoami
+	$who
+	$w
+	$lsof (see below)
+	What's the current kernel version?
+		$uname -a
+		$uname --> print out system information
+	What's the machine's IP address?
+		$ifconfig
+		$ip [addr | address] show [device=eth0,...]
+	How do you check for free disk space?
+		$df -ah
+	How do see if a service is running? Start it, stop it?
+		$service [service name] [status | stop | start | enable | disable ... ] --> older
+		$systemctl [status | stop | start | ... ] [service name] --> new, for systemd
+	How would you check the size of a directory's contents on disk?
+		$du -sh [directory name]
+	How would you check for open ports on a Linux machine?
+		$netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
+		--> execute as root (sudo) to display PID/Program name (normally hidden)
+	How do you check CPU usage for a given process
+		$ps aux | grep [process name]
+	How would you mount a new volume?
+		$mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
+	If you need to automatically mount a volume at boot where do you look?
+		$less /etc/fstab
+	How do you look something up you don't know?
+		$man [command]
+		$man -k [thing]
+		$apropos [thing]
+	What shell am I using, how do I temporarily change my shell, permanently?
+		$echo $SHELL
+		$[shell name]
+			ex: $bash --> switch to bash
+			ex: $zsh --> switch to zsh
+		To switch permanently use chsh command (see below)
+	How do I start a login shell, logout?
+		$su -l <user> --> (can login as yourself again as well)
+		Ctrl-d --> logout
+Navigation
+	$cd [DIRECTORY, ., .., ~]
+	$ls [-alh]
+	$PWD --> current working directory
+	$OLDPWD --> previous working directory!
+	$su --> change user id or become superuser
+	$less
+	$more --> crappier version of less
+	$head --> first ten lines
+	$tail --> last ten lines
+	$clear --> clears screen
+	Ctrl-l --> same as clear
+	$find --> search in directory structure
+		ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
+	Ctrl-r Search Ctrl
+	Ctrl-a Beginning of command line
+	Ctrl-e End of command line
+	Tab Autocompletion
+	$which bash
+	Ctrl-+ Zoom In
+	Ctrl-Shift-+ Zoom Out
+Creation & Destruction
+	$touch
+	$mkdir
+	$mv
+	$cp
+	$rm
+	$rmdir
+	$ln
+Search, Sort, Filter & Count
+	$grep
+	$wc
+	$uniq
+	$cut
+Shell variables
+	$echo $[Tab Button] --> autocomplete to see all the hundreds of shell variables
+	$env -->  print the environment variables 
+Pipes & Redirection
+	[FILE HANDLE]> direct input/output
+		where 0 = stdin, 1 = stdout, 2 = stderr
+		example:
+			echo "Hello World" 1> file.txt #directs text Hello World into file, will create file if not present
+		As a shorthand 1> is the same as >
+		Note that this will overwrite existing text in file. To append use >> instead
+		/dev/null discard location... ex. if you have a command that may through a number of errors you don't care about you can pipe STDERR to /dev/null
+			example: find / -name 2> /dev/null
+	&& conditional AND execute command on successful return of previous command
+		touch:
+			example file.txt && echo "Here's some text" >> file.txt
+	| pipe output of command into next command
+		example:
+			cat file.txt | grep alex | wc -l
+			reads file to output, greps for alex, and returns a count of matching lines
+	|| conditional OR
+Package Management
+	$apt-get install
+	$apt-get update
+	$apt-get upgrade
+	Adding repos
+User Account Management
+	$chsh -s [/path/to/shell] [user - blank if it's you!]
+		$chsh -s /bin/zsh bob
+	$sudo [-i]
+	$adduser 
+		--> friendlier version of useradd (below)
+	$useradd
+	$userdel
+	Files:
+		/etc/passwd --> user account info
+		/etc/shadow --> stores hashed passwords
+		/etc/shells --> available shells (available user shells can be added/removed here without deleting the shell)
+File Permissions
+	$chmod
+	$chown [permission bits] [owner:[group]] [file]
+		$chown 700 alex ~/file.txt
+	$chgrp
+UNIX Permissions
+	Value		Permission						Directory Listing
+	0			No read, no write, no execute	---
+	1			No read, no write, execute		--x
+	2			No read, write, no execute		-w-
+	3			No read, write, execute			-wx
+	4			Read, no write, no execute		r--
+	5			Read, no write, execute			r-x
+	6			Read, write, no execute			rw-
+	7			Read, write, execute			rwx
+Symbolic Permissions
+	Option			Letter		Represents
+	(who)			u			User
+	(who)			g			Group owner
+	(who)			o			Other
+	(who)			a			All (“world”)
+	(action)		+			Adding permissions
+	(action)		-			Removing permissions
+	(action)		=			Explicitly set permissions
+	(permission)	r			Read
+	(permission)	w			Write
+	(permission)	x			Execute
+	(permission)	t			Sticky bit
+	(permission)	s			Set UID or GID
+Processes & Signals
+	$kill
+	$nice
+	$renice
+	$fg
+	$reboot
+	$poweroff
+	$shutdown [options]
+The /proc Filesystem
+	$df
+		--> report filesystem disk usage
+	$strace
+		--> trace system calls and signals
+Filesystem
+	[man] hier
+	/boot
+		static files for the boot loader
+	/etc
+		place for application configuration
+		user-facing configuration and data
+		first place to look to check configuration troubleshooting
+	/sbin
+		system binaries
+		usually critical files to get system running
+		almost never modified
+		typically things only sudo can execute
+	/bin
+		all the other binaries
+		application binaries
+		even applications installed elsewhere often have links here
+		good practice b/c most users have /bin on their search path
+	/tmp
+		temporary files
+		processes store data here
+		process data generally cleaned out when process exits
+		gets blown away on reboot
+	/home
+		users home folders
+	/root
+		home folder for root
+	/lib & /lib64 (for 64-bit systems)
+		shared libraries
+	/dev
+		special files for devices
+	/media
+		auto-mounted (CD-ROM, USB sticks, etc)
+		convenience that's only on Ubuntu to avoid sudo which typically has to mount stuff
+	/mnt
+		on some other flavors of Linux, same as /media
+	/opt
+		optional software
+		sometimes used for locally compiled (not via package manager) software
+	/usr
+		others binaries, shared libraries
+		/usr/share for stuff common to, say, many desktops
+	/var
+		various
+		/var/log is system logs
+Linux File Types
+	permission bits have a leading character designating file type, officially 7 types
+	- (nothing) regular file
+	l link
+	d directory
+	b block device - anything that can store information e.g. disks
+	c character device - mouse or keyboard
+	others including named pipes and sockets
+	device files - interface file where the driver communicates with the firmware i.e. meeting/intersection point where linux-side driver communicates with the hardware itself or its firmware
+	socket - communication channel that opens, only visible for the parties that uses them, private file for processes
+Task Schedulijng with Cron
+	crontab [-e]
+	Each user has their own cron table
+	example:
+	#(m)	(h)	(dom) (moy) (wd) (cmd)
+	  15	 6 	 *		*	 1-5	echo "$(date): checking in." >> /var/log/mycheckin
+	  executed as at the 15th minute, of hour 6 (24-hour clock) every possible day of month, in every possible month of year on weekdays 1-5 (where 1=Monday, 7=Sunday), execute command (as interpreted by sh, note not bash)
+Compression & Archiving on Linux
+	tar -z(gzip archive)c(create archive)v(verbose)f(file) [Archive Name] [File]
+	tar -z(un-gzip extract)x(extract archive)v(verbose)f(file) [Archive Name]
+Bash Programming
+	() Precedence operators
+Variables & Quoting
+	$ prefixes variables, references a value
+	example:
+		myvar="Hello" creates the $myvar variable and sets it to "Hello"
+	variables can be called out in text with brackets
+		echo "This is my $some_number beer"
+		echo "This is my ${some_number}th beer"
+	commands can be substituted and variables dynamically evaluated with back tics
+		echo "there are `wc -l < /etc/group` lines in the /etc/group file"
+		num_lines=`ls $HOME | wc -l`
+		echo $num_lines
+How Bash Scripts Work
+	#!/bin/bash First line of every bash program
+		shell ignores this comment but kernel knows to execute using this bash
+	.sh is convention for shell script file type
+	exit statement to exit script
+		exit $? exits with return value of last command in script
+	0-255 return values, generally...
+		0 no problems encountered
+		1-255 error code... defined by developer
+	Need to ensure execute execute bit enabled for script
+	Execute via...
+		./myscript.sh
+		bash myscript.sh
+		source myscript.sh -> will also capture variables for session so you can recall variables
+		. myscript.sh
+Bash Arguments
+	$# --> number of arguments that our script was run with
+	$0 --> the filename of our script
+	$1..$n script arguments
+Bash If & Testing
+	control flow - if
+		if [ logical T/F ]; then
+			DO SOMETHING
+		elif []
+			do something else...
+		elif []
+			...
+		else
+			...
+		fi
+
+		use [] to close statements or [[]] for older systems
+	helper functions
+		|| logical OR
+		&& logical AND
+			functions are executed lazily
+			A || B 	--> if A is true, will not execute B
+					--> if A is false, will execute B
+			A && B  --> if A is true, will execute B
+					--> if A is false, will not execute B
+		!= --> logical does not equals
+		=  --> logical equals
+		>  --> greater than?
+		<  --> less than?
+		>= --> greater than or equal to?
+		<= --> less than or equal to?
+		-z A --> is A zero length/nully?
+			ex: [ -z "hello" ] --> returns false
+		-n A --> is A NOT nully?
+			ex: [ -n "wombat"] --> returns true
+
+		Old style systems...
+		A -eq B --> A equal B?
+		A -ne B --> A not equal B?
+		A -gt B --> A greater than B?
+		A -ge B --> A greater than or equal to B?
+		A -lt B --> A less than B?
+		A -le B --> A less than or equal to B?
+
+		For String comparison...
+		(()) --> double parens for encapsulating string comparison
+		= as above...
+		!=
+		<
+		<=
+		>
+		>=
+
+		file evaluation operators
+		-d [file] exists and is a directory
+		-e [file] exists
+		-f [file] exists and is a regular file 
+		-r [file] you have read permission
+		-s [file] exists and is not empty
+		-w [file] you have write permission
+		[file1] -nt [file2] file1 is newer than file2
+		[file1] -ot [file2] file1 is older than file2
+LSOF (list open files)
+	$lsof
+	$lsof [PATH] --> which processes have this file open?
+	$lsof -p [PID] --> which files does process X have open?
+	$lsof -p [PID] | grep bin --> where is the binary for this process
+	$lsof -p [PID] | grep .so --> Which shared libraries is this program using?
+	$lsof -p [PID] | grep log --> Where is this thing logging to?
+	$lsof grep [PATH/libname.so] --> Which processes still have this old library open?
+	$lsof -u [username] --> Which files does user username have open?
+	$lsof -i :[PORT] --> which processes are listening on port id PORT
+	$lsof -i [PROTOCOL] --> What's listening using protocol... tcp... udp?
+Shell Aliases
+	$alias
+		ex: alias lr="ls -lrc" --> now when you run lr it will execute "ls -lrc"
+			better than Ctrl-R search or retyping common commands
+		shadowing commands (overwriting a command)
+			ex: alias ls="ls -a --color" --> now the standard "ls" has 	some default options
+			ex: alias emacs="emacsXYZ" --> now I have a drop in replacement, replacing emacs with special variant emacs program
+	$alias --> command alone will list all existing aliases in your shell
+		$alias | grep [PATTERN] --> see if your alias is already in use
+	$unalias
+	shell aliases can be set for user across session with the alias commands in .bashrc, or .zshrc

@@ -1,0 +1,89 @@
+Named pipes
+	Allows you you to set callable pipes which can be invoked across the
+	filesystem, processes, terminal sessions, users, etc...
+	Ex. I want to pipe data from some large output into a named pipe, much
+	like a staging area
+		$mkfifo mypipe
+		$cat largefile.txt > mypipe
+		# In another terminal I can output contents
+		$cat < mypipe
+nohup
+
+Set user ID bit
+	If the SUID bit is set on an executable file it will run with and effective
+	user id (EUID) of the owner as opposed to the invoker.
+		Ex. file owned by root with permission bits -rwsr-xr-x (chmod 4755) executed
+		by user ID 1001 will be done with UID = 1001, EUID = 0
+Where data is stored
+	Module dependencies
+		$ldd [Program File] --> display module dependencies of a program
+			ex: $ldd /usr/bin/passwd --> prints shared objects required by passwd program
+		.so --> shared object files, commonly located in /lib, /usr/lib
+			--> /lib standard libraries
+			--> /usr/lib (Unix system resources) non-essential libraries
+		.ko --> loadable kernel modules, typically located in a /lib/modules/<kernel version>/... 
+			subdirectory
+		$file [File] --> interrogate file's header
+		$dmesg --> messages coming from drivers, print/manage kernel ring buffer (device messages)
+		Think of lsmod as dealing with kernel modules, ldd as standard module dependencies
+	Logging
+		/var/log --> variable data from programs writing their output (ex. logging), useful 
+			for debug purposes, security audits
+		/var/spool --> ???
+	Configuration
+		/etc --> Configurqation
+			*.d --> directories ending in '.d' are usuallying extensions (additional functionality) with .conf files for confiugration, may be empty
+Hardware
+	List Hardware & Drivers
+		$lshw 
+		$lshw -C network --> list hardware of class network
+		$lspci [-t] --> List PCI addresses/bus information and plugged in devices
+		$lsusb [-t] --> List USB addresses/bus information and plugged in devices
+		/dev --> device directory
+		$lsmod --> loaded modules/drivers, prints name, size and number/name of other modules 
+			which are dependent on it
+		$rmmod <modname> --> be careful about other module dependencies
+				$modprobe -r <module name> --> also removes modules
+		$modprobe -l --> list available modules
+		$insmod --> insert modules (need fully qualified path name, retrievable from modprobe)
+	Virtual Filesystem
+		Unix filesystem allows the addition (mounting) of additional filesystems (hard drives, network drives, etc.) into the existing system. This can be down at any location (mount point), but by convention there's usually a /mnt directory for this purpose. The mounting process connects the new filesystem's top-level '/' directory to your local mount point. 
+		$mount [-t fstype] <device> <dir> --> mounts filesystem of <device> at location <dir>
+			ex: $mount /dev/sdc /mnt --> mounts SCSI device 'c' into local filesystem at /mnt
+		$mount without any arguments displays list of all mounted filesystems
+	CPU Information
+		$lscpu
+Understanding /proc
+	/proc/interrupts --> display available interrupts and times they've interrupted CPU(s)
+	/proc/ioports 
+	/proc/dma
+Resource usage
+	$who --> who's logged in?
+	$w --> users on machine?
+	cat /proc/uptime shows uptime for users, where whitespace separated values correspon to
+	each user and the last value is total machine uptime.
+	$netstat -i --> see interfaces can measure sent/received packets
+	$netstat -s --> see statistics
+	$ping [-c <num>] <URL> --> ping URL, optionally a certain number of times with -c flag
+	Bundle statistics into word count:
+		ex. $lsof | wc -l
+	sysstat --> package of Linux system tools
+		$pidstat --> process statistics
+		man 8 sa2 --> man pages for collecting standard system activity
+		man 8 sa1 --> man pages for collecting binary data
+		make sure enabled="true" in /etc/default/sysstat file
+		systat data collection scheduled/configured in the /etc/cron.d/sysstat file
+		Run ad hoc
+			$sar [-u] 1 3 --> show me all data for the cpu device (via -u) at one second
+			collections, for 3 collection cycles. Different devices can be observed through different flags and options.
+				Other devices
+					-u --> cpu
+					-w --> context switches per/sec
+					-S --> swap space usage
+					-b --> memory use
+					-d --> disk reads by device
+			$iostat [-device flag] [interval] [iterations] --> I/O information for devices, 	same timing format as sar command.
+			$mpstat --> processor utilization, same timing format as sar.
+		Read collected data
+			/var/log/sysstat/sa* file can have sar commands executed against it
+				$sar [device] -f <filename> --> read collected device data from <filename> (usually sa*)

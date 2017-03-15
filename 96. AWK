@@ -1,0 +1,29 @@
+Usage
+	Consider grep
+		$grep alex /etc/group
+		-->result
+	Achieve similar behaviour with awk
+		$awk ' /alex/ { print } ' /etc/group
+		-->same result as grep
+	Formatting
+		Rows
+			$awk -F: ' NR==1,NR==3 { print } ' /etc/group
+			--> prints only the first 3 rows
+	Functions
+		Match
+			awk -F: ' match($4,/alex/) { print } ' /etc/group
+			--> -F flag tells to match, note the colon : which is passed to the flag as an instruction this file has colon-separated fields.
+			--> match functions takes parameters for field to match, in this case 4th field denoted by $4 and expression to match in this case the string 'alex'
+		Print
+			awk -F: 'match($4,/alex/) { print $1 }' /etc/group
+			--> as above but prints only first field instead of full line to output.
+		printf -> awk has printf!
+			uses similar formatting arguments as standard library function
+			ex.
+				some awk command... { printf "%-8s %3d\n", $1,$3} ... some file
+				--> prints a left-justified (by 8 characters) string and a right justified (by 3 characters) number passed through as columns 1 and 3 respectively.
+		length()
+			--> returns the length of argument
+			ex.
+				awk -F":" ' { print length($1), $3 } ' /etc/passwd
+				--> prints the length of column 1 and value of column 3

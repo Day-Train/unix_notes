@@ -1,0 +1,36 @@
+Package management (install from binary)
+	$pkg 
+		--> installs package manager
+	$pkg [--version]
+	$pkg install <package>
+		$pkg install nano --> install nano text editor
+	$pkg delete <package>
+	$pkg upgrade
+	$pkg audit -F
+Ports collections (install from source)
+	First time use:
+		$portsnap fetch
+		$portsnap extract
+		$portsnap fetch update
+Software
+	How do I find...
+		$whereis <search criteria>
+		$pkg search [options]
+		$ports search [options]
+	How do I install sudo...
+		$su root
+		$pkg install sudo
+		As root
+		$visudo
+			--> edit config file appropriately
+User Account Management
+	$pw [keyword] [options]
+		--> create, read, update, delete users and groups, usually specific by pw and keyword (ex. $pw useradd ...)
+		$pw groupmod wheel -m bob --> add bob to the 'wheel' group without overwriting existing members (-M will overwrite)
+		$pw groupshow wheel --> show members of group 'wheel'
+		$pw groupadd newteam --> create new group 'newteam'
+	$passwd [username]
+		--> change your password or optionally change password of user specified by 'username'
+	$id [username]
+		--> Show id characterists (gid, uid, etc) of current user or optionally user specified by 'username'
+
