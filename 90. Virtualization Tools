@@ -1,0 +1,7 @@
+Virtual Box Manager
+	Set VBox Network settings
+		$VBoxManage modifyvm <myserver> --natpf1 "ssh,tcp,,<port number>,,22"
+	[Optional] Check rules
+		$VBoxManage showvminfo myserver | grep 'Rule'
+	SSH from machine into virtual box
+		$ssh -p <port number> user@127.0.0.1

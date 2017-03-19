@@ -1,0 +1,13 @@
+Emacs
+	Default Keybindings
+		Navigation
+			Ctrl-V scroll forward 1 page
+			Meta-V scroll back 1 page
+			Ctrl-F move cursor ahead one character
+			Ctrl-B move cursor back one character
+			Ctrl-N move cursor ahead one line
+			Ctrl-P move cursor back one line
+		Commands
+			Ctrl-G escape current command (get me out of here)
+			Ctrl-U <Integer> multiply next command --> ex. Ctrl-U 8 * prints ********
+			Ctrl-X Ctrl-C exit Emacs

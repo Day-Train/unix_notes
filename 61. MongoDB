@@ -1,0 +1,25 @@
+MongoDB Configuration
+	Default configuration file /etc/mongod.conf
+	Run with:
+		$mongod --config /etc/mongod.conf
+		OR
+		$mongod -f /etc/mongod.conf
+	Configuration Parameters
+		processManagement:
+			fork: true		#Forks into daemon, detaching process
+	Termination
+		$mongo #goes into mongo shell
+		$use admin
+		$db.shutdownServer()
+
+		OR
+
+		mongod --shutdown
+
+		OR
+
+		Ctrl-c
+
+		OR
+
+		SIGTERM is ok, try not to use SIGKILL...

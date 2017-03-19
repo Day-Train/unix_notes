@@ -1,0 +1,34 @@
+Command Mode:
+	Navigation
+		i enter insert mode
+		Shift-r enter replace mode
+		Shift-a append --> insert mode with cursor at end of line
+		Esc return to command mode
+	Commands
+		dd delete current line of cursor
+		yy copy current line of cursor
+		<number>-yy copy line <number>
+		p paste below cursor line
+		P paste at cursor line
+		j move down line
+		k move up line
+		h move left
+		l move right
+		w move one word to the right
+		b move one word to the left
+		dw delete word
+		cw clear word, delete and enter insert mode
+		yw copy word
+		<number>-yw copy <number> of words
+		0 move to beginning of line
+		D delete to the end of the line
+		<Number>-G move cursor to line <Number>
+		1-G move cursor to beginning of document
+		G move cursor to end of document
+		:w write (save file)
+		:w [filename] --> save to filename
+		:r [filename] --> read text of [filename] into current file
+		:r!date		  --> read date into current file
+		:q quit
+		/<pattern> --> search for pattern in file
+			--> n --> go to next occurence of pattern
