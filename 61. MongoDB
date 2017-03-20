@@ -1,6 +1,6 @@
 MongoDB Configuration
 	Default configuration file /etc/mongod.conf
-	Run with:
+	Run on command line:
 		$mongod --config /etc/mongod.conf
 		OR
 		$mongod -f /etc/mongod.conf
@@ -23,3 +23,43 @@ MongoDB Configuration
 		OR
 
 		SIGTERM is ok, try not to use SIGKILL...
+Ubuntu Configuration
+	Import public key
+		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+	Create sources list
+		echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+	Update repo
+		sudo apt-get update
+	Installation
+		sudo apt-get install -y mongodb-org
+	Create system service
+		cd /lib/systemd/system/
+		vi mongod.service
+	Include following configuration
+		[Unit]
+		Description=High-performance, schema-free document-oriented database
+		After=network.target
+		Documentation=https://docs.mongodb.org/manual
+
+		[Service]
+		User=mongodb
+		Group=mongodb
+		ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf
+
+		[Install]
+		WantedBy=multi-user.target
+	Update systemd service
+		systemctl daemon-reload
+		systemctl start mongod
+	Check running
+		netstat -tulpn
+	Configure admin user
+		mongo
+		use admin
+		db.createUser({user:"admin", pwd:"admin123", roles:[{role:"root", db:"admin"}]})
+	Enable mongodb auth
+		vim /lib/systemd/system/mongod.service
+		systemctl daemon-reload
+	Restart service and connect
+		sudo service mongod restart
+		mongo -u admin -p admin123 --authenticationDatabase admin
