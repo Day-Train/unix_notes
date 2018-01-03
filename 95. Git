@@ -16,3 +16,5 @@ Handy things...
 	Make and email patches
 		$git format-patch <master branch> <working branch>
 		$git send-email --to <email> --cc <email>
+
+hello!
