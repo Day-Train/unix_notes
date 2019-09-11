@@ -2,84 +2,86 @@
 #What does !<command> do in shell?
 #What are restricted commands (rbash) in shell?
 
-What's going on?
-	$top
-	$htop
-	$ps [aux]
-	$netstat [-tupln]
-	$man
-	$cat
-	$echo
-	$idlinu
-	$history
-	$whoami
-	$who
-	$w
-	$lsof (see below)
-	What's the current kernel version?
-		$uname -a
-		$uname --> print out system information
-	What's the machine's IP address?
-		$ifconfig
-		$ip [addr | address] show [device=eth0,...]
-	How do you check for free disk space?
-		$df -ah
-	How do see if a service is running? Start it, stop it?
-		$service [service name] [status | stop | start | enable | disable ... ] --> older
-		$systemctl [status | stop | start | ... ] [service name] --> new, for systemd
-	How would you check the size of a directory's contents on disk?
-		$du -sh [directory name]
-	How would you check for open ports on a Linux machine?
-		$netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
-		--> execute as root (sudo) to display PID/Program name (normally hidden)
-	How do you check CPU usage for a given process
-		$ps aux | grep [process name]
-	How would you mount a new volume?
-		$mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
-	If you need to automatically mount a volume at boot where do you look?
-		$less /etc/fstab
-	How do you look something up you don't know?
-		$man [command]
-		$man -k [thing]
-		$apropos [thing]
-	What shell am I using, how do I temporarily change my shell, permanently?
-		$echo $SHELL
-		$[shell name]
-			ex: $bash --> switch to bash
-			ex: $zsh --> switch to zsh
-		To switch permanently use chsh command (see below)
-	How do I start a login shell, logout?
-		$su -l <user> --> (can login as yourself again as well)
-		Ctrl-d --> logout
-Navigation
-	$cd [DIRECTORY, ., .., ~]
-	$ls [-alh]
-	$PWD --> current working directory
-	$OLDPWD --> previous working directory!
-	$su --> change user id or become superuser
-	$less
-	$more --> crappier version of less
-	$head --> first ten lines
-	$tail --> last ten lines
-	$clear --> clears screen
-	Ctrl-l --> same as clear
-	$find --> search in directory structure
-		ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
-	Ctrl-r Search Ctrl
-	Ctrl-a Beginning of command line
-	Ctrl-e End of command line
-	Tab Autocompletion
-	$which bash
-	Ctrl-+ Zoom In
-	Ctrl-Shift-+ Zoom Out
-Creation & Destruction
-	$touch
-	$mkdir
-	$mv
-	$cp
-	$rm
-	$rmdir
-	$ln
+# What's going on?
+$ top						#Display Linux processes
+$ htop						#Interactive, more powerful variant of $top if you have it installed
+$ ps [aux]					#Display information about active processes, [aux] displays every process
+$ netstat [-tupln]				#Utility for displaying IP connections, -t TCP, -u, UDP, -p enable selection of specified protocols
+$ man <command>					#Display manual pages for <command>
+$ cat <file.txt>				#Print contents of file to screen					
+$ echo <string>					#Echo string			
+$ idlinu
+$ history					#Display command history
+$ whoami					#Display current user
+$ who						#Display information about currently logged in users
+$ w						#As above but also includes their processes
+$ lsof 						#List of open files (see below)
+	
+#What's the current kernel version?
+	$uname -a
+	$uname --> print out system information
+#What's the machine's IP address?
+	$ifconfig
+	$ip [addr | address] show [device=eth0,...]
+#How do you check for free disk space?
+	$df -ah
+#How do see if a service is running? Start it, stop it?
+	$service [service name] [status | stop | start | enable | disable ... ] --> older
+	$systemctl [status | stop | start | ... ] [service name] --> new, for systemd
+#How would you check the size of a directory's contents on disk?
+	$du -sh [directory name]
+#How would you check for open ports on a Linux machine?
+	$netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
+	#execute as root (sudo) to display PID/Program name (normally hidden)
+#How do you check CPU usage for a given process
+	$ps aux | grep [process name]
+#How would you mount a new volume?
+	$mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
+#If you need to automatically mount a volume at boot where do you look?
+	$less /etc/fstab
+#How do you look something up you don't know?
+	$man [command]
+	$man -k [thing]
+	$apropos [thing]
+#What shell am I using, how do I temporarily change my shell, permanently?
+	$echo $SHELL
+	$[shell name]
+		ex: $bash --> switch to bash
+		ex: $zsh --> switch to zsh
+	#To switch permanently use chsh command (see below)
+#How do I start a login shell, logout?
+	$su -l <user> --> (can login as yourself again as well)
+	Ctrl-d --> logout
+#Navigation
+$ cd [DIRECTORY, ., .., ~]					#Change to specified directory, or home if no arguments passed
+$ ls [-alh]							#Display contents of PWD, -a include hidden, -l verbose descriptions, -h human readable
+$ PWD 								#Current working directory
+$ OLDPWD							#Previous working directory!
+$ su 								#Change user id or become superuser
+$ less								#Like cat but only print lines at a time
+$ more 								#Crappier version of less
+$ head 								#First ten lines
+$ tail	 							#Last ten lines
+$ clear 							#Clears screen
+$ <Ctrl-l> 							#Same as clear
+$ find	 							#Search in directory structure
+	ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
+<Ctrl-r> 							#Search Ctrl
+<Ctrl-a> 							#Beginning of command line
+<Ctrl-e> 							#End of command line
+<Tab> 								#Autocompletion
+$ which bash
+<Ctrl-+> 							#Zoom In
+<Ctrl-Shift-+>	 						#Zoom Out
+
+#Creation & Destruction
+$ touch
+$ mkdir
+$ mv
+$ cp
+$ rm
+$ rmdir
+$ ln
 Search, Sort, Filter & Count
 	$grep
 	$wc
