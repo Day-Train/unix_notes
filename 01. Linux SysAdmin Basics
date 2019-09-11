@@ -18,43 +18,43 @@ $ w						#As above but also includes their processes
 $ lsof 						#List of open files (see below)
 	
 #What's the current kernel version?
-	$uname -a
-	$uname --> print out system information
+	$ uname -a
+	$ uname --> print out system information
 #What's the machine's IP address?
-	$ifconfig
-	$ip [addr | address] show [device=eth0,...]
+	$ ifconfig
+	$ ip [addr | address] show [device=eth0,...]
 #How do you check for free disk space?
-	$df -ah
+	$ df -ah
 #How do see if a service is running? Start it, stop it?
-	$service [service name] [status | stop | start | enable | disable ... ] --> older
-	$systemctl [status | stop | start | ... ] [service name] --> new, for systemd
+	$ service [service name] [status | stop | start | enable | disable ... ] 	#Older way of doing it
+	$ systemctl [status | stop | start | ... ] [service name] 			#Newer way using systemd
 #How would you check the size of a directory's contents on disk?
-	$du -sh [directory name]
+	$ du -sh [directory name]
 #How would you check for open ports on a Linux machine?
-	$netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
+	$ netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
 	#execute as root (sudo) to display PID/Program name (normally hidden)
 #How do you check CPU usage for a given process
-	$ps aux | grep [process name]
+	$ ps aux | grep [process name]
 #How would you mount a new volume?
-	$mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
+	$ mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
 #If you need to automatically mount a volume at boot where do you look?
-	$less /etc/fstab
+	$ less /etc/fstab
 #How do you look something up you don't know?
-	$man [command]
-	$man -k [thing]
-	$apropos [thing]
-#What shell am I using, how do I temporarily change my shell, permanently?
-	$echo $SHELL
-	$[shell name]
-		ex: $bash --> switch to bash
-		ex: $zsh --> switch to zsh
+	$ man [command]
+	$ man -k [thing]
+	$ apropos [thing]
+#What shell am I using, how do I temporarily change my shell? permanently?
+	$ echo $SHELL
+	$ [shell name]
+		ex: $ bash 						#Switches to bash
+		ex: $ zsh 						#Switches to zsh
 	#To switch permanently use chsh command (see below)
 #How do I start a login shell, logout?
-	$su -l <user> --> (can login as yourself again as well)
-	Ctrl-d --> logout
+	$ su -l <user>							#Note: can login as yourself again as well
+	$ <Ctrl-d> 							#Logout
 #Navigation
-$ cd [DIRECTORY, ., .., ~]					#Change to specified directory, or home if no arguments passed
-$ ls [-alh]							#Display contents of PWD, -a include hidden, -l verbose descriptions, -h human readable
+$ cd [<directory>, ., .., ~]					#Change to specified directory, or home if no arguments passed
+$ ls [-alh]							#Display contents of PWD, -a include hidden, -l verbose detail, -h human readable
 $ PWD 								#Current working directory
 $ OLDPWD							#Previous working directory!
 $ su 								#Change user id or become superuser
@@ -70,28 +70,28 @@ $ find	 							#Search in directory structure
 <Ctrl-a> 							#Beginning of command line
 <Ctrl-e> 							#End of command line
 <Tab> 								#Autocompletion
-$ which bash
+$ which bash							#Which shell am I using?
 <Ctrl-+> 							#Zoom In
 <Ctrl-Shift-+>	 						#Zoom Out
 
 #Creation & Destruction
-$ touch
-$ mkdir
-$ mv
-$ cp
-$ rm
-$ rmdir
-$ ln
-Search, Sort, Filter & Count
-	$grep
-	$wc
-	$uniq
-	$cut
-Shell variables
-	$echo $[Tab Button] --> autocomplete to see all the hundreds of shell variables
-	$env -->  print the environment variables 
-Pipes & Redirection
-	[FILE HANDLE]> direct input/output
+$ touch <filename>						#Create file, if file exists update timestamp
+$ mkdir <directory name>					#Create directory
+$ mv <filename1> <filename2>					#Move file, if no path specified renames file
+$ cp <filename1> <filname2>					#Copy file							
+$ rm <filename>							#Delete file		
+$ rmdir <directory name>					#Delete directory
+$ ln <target> <link name>					#Create link to target with link name, -s sym-link
+#Search, Sort, Filter & Count
+	$ grep
+	$ wc
+	$ uniq
+	$ cut
+#Shell variables
+	$ echo $<Tab Button? 					#Autocomplete to see all the hundreds of shell variables
+	$ env							#Print the environment variables 
+#Pipes & Redirection
+		$ [something] > [something] direct input/output
 		where 0 = stdin, 1 = stdout, 2 = stderr
 		example:
 			echo "Hello World" 1> file.txt #directs text Hello World into file, will create file if not present
@@ -107,19 +107,19 @@ Pipes & Redirection
 			cat file.txt | grep alex | wc -l
 			reads file to output, greps for alex, and returns a count of matching lines
 	|| conditional OR
-Package Management
-	$apt-get install
-	$apt-get update
-	$apt-get upgrade
+#Debian package Management
+	$ apt-get install
+	$ apt-get update
+	$ apt-get upgrade
 	Adding repos
-User Account Management
-	$chsh -s [/path/to/shell] [user - blank if it's you!]
-		$chsh -s /bin/zsh bob
-	$sudo [-i]
-	$adduser 
+#User Account Management
+	$ chsh -s [/path/to/shell] [user - blank if it's you!]
+		$ chsh -s /bin/zsh bob
+	$ sudo [-i]
+	$ adduser 
 		--> friendlier version of useradd (below)
-	$useradd
-	$userdel
+	$ useradd
+	$ userdel
 	Files:
 		/etc/passwd --> user account info
 		/etc/shadow --> stores hashed passwords
@@ -154,17 +154,17 @@ Symbolic Permissions
 	(permission)	t			Sticky bit
 	(permission)	s			Set UID or GID
 Processes & Signals
-	$kill
-	$nice
-	$renice
-	$fg
-	$reboot
-	$poweroff
-	$shutdown [options]
+	$ kill
+	$ nice
+	$ renice
+	$ fg
+	$ reboot
+	$ poweroff
+	$ shutdown [options]
 The /proc Filesystem
-	$df
+	$ df
 		--> report filesystem disk usage
-	$strace
+	$ strace
 		--> trace system calls and signals
 Filesystem
 	[man] hier
@@ -221,7 +221,8 @@ Linux File Types
 	others including named pipes and sockets
 	device files - interface file where the driver communicates with the firmware i.e. meeting/intersection point where linux-side driver communicates with the hardware itself or its firmware
 	socket - communication channel that opens, only visible for the parties that uses them, private file for processes
-Task Schedulijng with Cron
+
+#Task scheduling with Cron
 	crontab [-e]
 	Each user has their own cron table
 	example:
@@ -259,11 +260,13 @@ How Bash Scripts Work
 		bash myscript.sh
 		source myscript.sh -> will also capture variables for session so you can recall variables
 		. myscript.sh
-Bash Arguments
-	$# --> number of arguments that our script was run with
-	$0 --> the filename of our script
-	$1..$n script arguments
-Bash If & Testing
+		
+#Bash Arguments
+	$ # --> number of arguments that our script was run with
+	$ 0 --> the filename of our script
+	$ 1..$n script arguments
+	
+#Bash If & Testing
 	control flow - if
 		if [ logical T/F ]; then
 			DO SOMETHING
@@ -313,33 +316,35 @@ Bash If & Testing
 		>=
 
 		file evaluation operators
-		-d [file] exists and is a directory
-		-e [file] exists
-		-f [file] exists and is a regular file 
-		-r [file] you have read permission
-		-s [file] exists and is not empty
-		-w [file] you have write permission
-		[file1] -nt [file2] file1 is newer than file2
-		[file1] -ot [file2] file1 is older than file2
-LSOF (list open files)
-	$lsof
-	$lsof [PATH] --> which processes have this file open?
-	$lsof -p [PID] --> which files does process X have open?
-	$lsof -p [PID] | grep bin --> where is the binary for this process
-	$lsof -p [PID] | grep .so --> Which shared libraries is this program using?
-	$lsof -p [PID] | grep log --> Where is this thing logging to?
-	$lsof grep [PATH/libname.so] --> Which processes still have this old library open?
-	$lsof -u [username] --> Which files does user username have open?
-	$lsof -i :[PORT] --> which processes are listening on port id PORT
-	$lsof -i [PROTOCOL] --> What's listening using protocol... tcp... udp?
+		-d [file] 					#Exists and is a directory
+		-e [file] 					#Exists
+		-f [file] 					#Exists and is a regular file 
+		-r [file] 					#You have read permission
+		-s [file] 					#Exists and is not empty
+		-w [file] 					#You have write permission
+		[file1] -nt [file2] 				#file1 is newer than file2
+		[file1] -ot [file2] 				#file1 is older than file2
+
+#LSOF (list open files)
+	$ lsof
+	$ lsof [PATH] 						#which processes have this file open?
+	$ lsof -p [PID] 					#which files does process X have open?
+	$ lsof -p [PID] | grep bin 				#where is the binary for this process
+	$ lsof -p [PID] | grep .so 				#Which shared libraries is this program using?
+	$ lsof -p [PID] | grep log 				#Where is this thing logging to?
+	$ lsof grep [PATH/libname.so] 				#Which processes still have this old library open?
+	$ lsof -u [username] 					#Which files does user username have open?
+	$ lsof -i :[PORT] 					#which processes are listening on port id PORT
+	$ lsof -i [PROTOCOL] 					#What's listening using protocol... tcp... udp?
+	
 Shell Aliases
-	$alias
+	$ alias
 		ex: alias lr="ls -lrc" --> now when you run lr it will execute "ls -lrc"
 			better than Ctrl-R search or retyping common commands
 		shadowing commands (overwriting a command)
 			ex: alias ls="ls -a --color" --> now the standard "ls" has 	some default options
 			ex: alias emacs="emacsXYZ" --> now I have a drop in replacement, replacing emacs with special variant emacs program
-	$alias --> command alone will list all existing aliases in your shell
+	$ alias --> command alone will list all existing aliases in your shell
 		$alias | grep [PATTERN] --> see if your alias is already in use
-	$unalias
+	$ unalias
 	shell aliases can be set for user across session with the alias commands in .bashrc, or .zshrc
