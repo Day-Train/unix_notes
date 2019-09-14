@@ -20,38 +20,50 @@ $ lsof 						#List of open files (see below)
 #What's the current kernel version?
 	$ uname -a
 	$ uname --> print out system information
+	
 #What's the machine's IP address?
 	$ ifconfig
 	$ ip [addr | address] show [device=eth0,...]
+	
 #How do you check for free disk space?
 	$ df -ah
+	
 #How do see if a service is running? Start it, stop it?
 	$ service [service name] [status | stop | start | enable | disable ... ] 	#Older way of doing it
 	$ systemctl [status | stop | start | ... ] [service name] 			#Newer way using systemd
+	
 #How would you check the size of a directory's contents on disk?
 	$ du -sh [directory name]
+	
 #How would you check for open ports on a Linux machine?
 	$ netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
 	#execute as root (sudo) to display PID/Program name (normally hidden)
+	
 #How do you check CPU usage for a given process
 	$ ps aux | grep [process name]
+	
 #How would you mount a new volume?
 	$ mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
+	
 #If you need to automatically mount a volume at boot where do you look?
 	$ less /etc/fstab
+	
 #How do you look something up you don't know?
 	$ man [command]
 	$ man -k [thing]
 	$ apropos [thing]
+	
 #What shell am I using, how do I temporarily change my shell? permanently?
 	$ echo $SHELL
 	$ [shell name]
 		ex: $ bash 						#Switches to bash
 		ex: $ zsh 						#Switches to zsh
 	#To switch permanently use chsh command (see below)
+	
 #How do I start a login shell, logout?
 	$ su -l <user>							#Note: can login as yourself again as well
 	$ <Ctrl-d> 							#Logout
+	
 #Navigation
 $ cd [<directory>, ., .., ~]					#Change to specified directory, or home if no arguments passed
 $ ls [-alh]							#Display contents of PWD, -a include hidden, -l verbose detail, -h human readable
@@ -66,13 +78,13 @@ $ clear 							#Clears screen
 $ <Ctrl-l> 							#Same as clear
 $ find	 							#Search in directory structure
 	ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
-<Ctrl-r> 							#Search Ctrl
-<Ctrl-a> 							#Beginning of command line
-<Ctrl-e> 							#End of command line
-<Tab> 								#Autocompletion
+$ <Ctrl-r> 							#Search Ctrl
+$ <Ctrl-a> 							#Beginning of command line
+$<Ctrl-e> 							#End of command line
+$ <Tab> 							#Autocompletion
 $ which bash							#Which shell am I using?
-<Ctrl-+> 							#Zoom In
-<Ctrl-Shift-+>	 						#Zoom Out
+$ <Ctrl-+> 							#Zoom In
+$ <Ctrl-Shift-+> 						#Zoom Out
 
 #Creation & Destruction
 $ touch <filename>						#Create file, if file exists update timestamp
@@ -87,18 +99,20 @@ $ ln <target> <link name>					#Create link to target with link name, -s sym-link
 	$ wc
 	$ uniq
 	$ cut
+	
 #Shell variables
 	$ echo $<Tab Button? 					#Autocomplete to see all the hundreds of shell variables
 	$ env							#Print the environment variables 
-#Pipes & Redirection
-		$ [something] > [something] direct input/output
-		where 0 = stdin, 1 = stdout, 2 = stderr
-		example:
-			echo "Hello World" 1> file.txt #directs text Hello World into file, will create file if not present
-		As a shorthand 1> is the same as >
-		Note that this will overwrite existing text in file. To append use >> instead
-		/dev/null discard location... ex. if you have a command that may through a number of errors you don't care about you can pipe STDERR to /dev/null
-			example: find / -name 2> /dev/null
+	
+#Pipes, redirection, stdin, stdout, and stderr
+		$ <command1> > <command2> 			#Direct input/output
+		#where 0 = stdin, 1 = stdout, 2 = stderr
+		#example:
+		$ echo "Hello World" 1> file.txt #directs text Hello World into file, will create file if not present
+		#As a shorthand 1> is the same as >
+		#Note that this will overwrite existing text in file. To append use >> instead
+		#/dev/null discard location... ex. if you have a command that may through a number of errors you don't care about you can pipe STDERR to /dev/null
+		$ find / -name 2> /dev/null
 	&& conditional AND execute command on successful return of previous command
 		touch:
 			example file.txt && echo "Here's some text" >> file.txt
@@ -107,11 +121,13 @@ $ ln <target> <link name>					#Create link to target with link name, -s sym-link
 			cat file.txt | grep alex | wc -l
 			reads file to output, greps for alex, and returns a count of matching lines
 	|| conditional OR
+	
 #Debian package Management
 	$ apt-get install
 	$ apt-get update
 	$ apt-get upgrade
 	Adding repos
+	
 #User Account Management
 	$ chsh -s [/path/to/shell] [user - blank if it's you!]
 		$ chsh -s /bin/zsh bob
@@ -124,11 +140,13 @@ $ ln <target> <link name>					#Create link to target with link name, -s sym-link
 		/etc/passwd --> user account info
 		/etc/shadow --> stores hashed passwords
 		/etc/shells --> available shells (available user shells can be added/removed here without deleting the shell)
+		
 File Permissions
 	$chmod
 	$chown [permission bits] [owner:[group]] [file]
 		$chown 700 alex ~/file.txt
 	$chgrp
+	
 UNIX Permissions
 	Value		Permission						Directory Listing
 	0			No read, no write, no execute	---
@@ -139,6 +157,7 @@ UNIX Permissions
 	5			Read, no write, execute			r-x
 	6			Read, write, no execute			rw-
 	7			Read, write, execute			rwx
+	
 Symbolic Permissions
 	Option			Letter		Represents
 	(who)			u			User
@@ -153,6 +172,7 @@ Symbolic Permissions
 	(permission)	x			Execute
 	(permission)	t			Sticky bit
 	(permission)	s			Set UID or GID
+	
 Processes & Signals
 	$ kill
 	$ nice
@@ -161,11 +181,13 @@ Processes & Signals
 	$ reboot
 	$ poweroff
 	$ shutdown [options]
+	
 The /proc Filesystem
 	$ df
 		--> report filesystem disk usage
 	$ strace
 		--> trace system calls and signals
+		
 Filesystem
 	[man] hier
 	/boot
@@ -211,7 +233,8 @@ Filesystem
 	/var
 		various
 		/var/log is system logs
-Linux File Types
+		
+#Linux File Types
 	permission bits have a leading character designating file type, officially 7 types
 	- (nothing) regular file
 	l link
@@ -229,12 +252,12 @@ Linux File Types
 	#(m)	(h)	(dom) (moy) (wd) (cmd)
 	  15	 6 	 *		*	 1-5	echo "$(date): checking in." >> /var/log/mycheckin
 	  executed as at the 15th minute, of hour 6 (24-hour clock) every possible day of month, in every possible month of year on weekdays 1-5 (where 1=Monday, 7=Sunday), execute command (as interpreted by sh, note not bash)
-Compression & Archiving on Linux
+#Compression & Archiving on Linux
 	tar -z(gzip archive)c(create archive)v(verbose)f(file) [Archive Name] [File]
 	tar -z(un-gzip extract)x(extract archive)v(verbose)f(file) [Archive Name]
-Bash Programming
+#Bash Programming
 	() Precedence operators
-Variables & Quoting
+#Variables & Quoting
 	$ prefixes variables, references a value
 	example:
 		myvar="Hello" creates the $myvar variable and sets it to "Hello"
@@ -245,7 +268,7 @@ Variables & Quoting
 		echo "there are `wc -l < /etc/group` lines in the /etc/group file"
 		num_lines=`ls $HOME | wc -l`
 		echo $num_lines
-How Bash Scripts Work
+#How Bash Scripts Work
 	#!/bin/bash First line of every bash program
 		shell ignores this comment but kernel knows to execute using this bash
 	.sh is convention for shell script file type
