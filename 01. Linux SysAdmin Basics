@@ -16,6 +16,7 @@ $ whoami					#Display current user
 $ who						#Display information about currently logged in users
 $ w						#As above but also includes their processes
 $ lsof 						#List of open files (see below)
+$ printenv					#List environment variables
 	
 #What's the current kernel version?
 	$ uname -a
@@ -167,11 +168,11 @@ Symbolic Permissions
 	(action)		+			Adding permissions
 	(action)		-			Removing permissions
 	(action)		=			Explicitly set permissions
-	(permission)	r			Read
-	(permission)	w			Write
-	(permission)	x			Execute
-	(permission)	t			Sticky bit
-	(permission)	s			Set UID or GID
+	(permission)		r			Read
+	(permission)		w			Write
+	(permission)		x			Execute
+	(permission)		t			Sticky bit
+	(permission)		s			Set UID or GID
 	
 Processes & Signals
 	$ kill
