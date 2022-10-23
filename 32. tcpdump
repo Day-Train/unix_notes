@@ -1,0 +1,60 @@
+# Writing tcpdump Filters
+
+@@@@@@@@@
+@ BPFs! @
+@@@@@@@@@
+
+# Show me things that are tcp!
+# Consider filtering for "tcp" vs. the ip offset ip[9] = 6
+$ tcpdump -r wireshark-df.pcap -nt -vv ip[9]=6
+
+
+# General Filters
+<protocol header> [offset: length] <relation> <value>       # note that length is treated in bytes
+ip[9] = 0x1             # Filter where protocal is icmp
+tcp[2:2] != 80          # Filter where source port is not http/80 
+udp[4:2] > 0            # Filter where UDP datagram length greater than 0
+icmp[0] = 0x03 && icmp[1] = 0x01    # Filter where "network unreachable" && "host unreachable"
+
+##############
+# Bitmasking #
+##############
+# Consider the IP header length (IHL) which is the four low-order bits of offset zero in the IP header ip[0]
+# I want to find packets where IHL > 20 bytes
+
+ip[0] > 0x45        # Fails!
+
+4-bit IP version    4-bit IHL
+0   1   0   0       0   0   0   0
+
+# Solution is to "AND" unwanted bits with 0s to zeroize them and "AND" wanted bits with 1s
+# In the case above we would set a mask value of 0x0f and bitmask it against ip[0], turning off unwanted bits and preserving wanted ones
+
+ip[0] & 0x0f > 0x5  # Solution!
+
+# Note: & for bitwise masking... && for logical AND (consider using "and" instead to avoid confusion)
+
+# A few more examples...
+tcp[13] = 0x02  # SYN bit only set
+tcp[13] = 2     # ...in decimal
+
+tcp[13] = 0x18  # ACK and PUSH only set
+tcp[13] = 24    # ...in decimal
+
+# I want to find packets where only the SYN and FIN bits are set
+tcp[13] = 0x03
+
+# I want to find packets where the SYN and FIN bits are set, and do not care otherwise
+tcp[13] & 0x03 = 0x03
+
+# I want to find packets where the SYN or FIN bits are set, and do not care otherwise
+tcp[13] & 0x03 != 0
+
+# Filter to chech BOTH the FIN and RST bits are set? (no other bits are set)
+tcp[13] = 0x05
+
+# Filter where PSH and ACK are both set and other flags can be set?
+tcp[13] & 0x18 = 0x18
+
+# Filter where either or both the PSH and FIN are set?
+tcp[13] & 0x09 != 0

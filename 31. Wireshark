@@ -1,0 +1,30 @@
+@@@@@@@@@@@@@@@@@@@
+@ Display Filters @
+@@@@@@@@@@@@@@@@@@@
+
+# View only packets that match my expression
+[ws]> dns.qry.name contains "www.evil.com"      # Search for specific field for match
+[ws]> frame contains "www.evil.com"             # Search entire frame for match
+
+# Difference between "Contains" and "Find Packet"
+# Contains limits view to only packets, good for filtering and isolating
+# Find Packet does not limit view, good for seeing data in context
+
+# Use REGEX
+[ws]> dns.qry.name matches "^www"
+
+####################
+# Creating Filters #
+####################
+
+Option 1:
+# Create display filters through the GUI using "Analyze" --> "Display Filter Expression..."
+
+Option 2: 
+# Use autocomplete as you type out the protocols you're interested in...
+
+Option 3:
+# Any field, value, etc. you can select you can right click you can use the "Apply as Filter" menu option
+
+# Consider "Prepare as Filter" to create your expression without applying it, whereas "Apply as Filter" does total processing and can be more expensive
+
