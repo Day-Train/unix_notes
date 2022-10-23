@@ -7,5 +7,17 @@ $   Match end of line
 ?   Match zero or one of previous ("it's optional")
 +   Match one or more of previous
 .   Match any character
+^[^0-9]     Special case: the second "^" is a NOT operator. In this case match line starting with NOT a number
 
-# TODO
+# Examples
+.*          # Match zero or more of any character
+A+          # Match one or more capital "A"
+.+          # Match one or more of any character
+[aeiou]+    # Match one or more vowels
+
+# Anchors
+^[aeiou]+   # Match one or more vowels at the beginning of the line
+[aeiou]+$   # Match one or more vowels at the end of the line
+
+# Consider the searches for URLs
+https?://   # Matches both http and https by making "s" optional
