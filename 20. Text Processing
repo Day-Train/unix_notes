@@ -1,1 +1,9 @@
-# TODO
+# Metacharacters
+
+*   Match zero or more of previous
+[]  Describe a set
+^   Match the beginning of line
+$   Match end of line
+?   Match zero or one of previous ("it's optional")
++   Match one or more of previous
+.   Match any character
