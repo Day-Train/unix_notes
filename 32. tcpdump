@@ -61,3 +61,14 @@ tcp[13] & 0x18 = 0x18
 
 # Filter where either or both the PSH and FIN are set?
 tcp[13] & 0x09 != 0
+
+#############
+# Use cases #
+#############
+1. Find me the unique TCP services within our network that appear to be listening?
+# (a) Mask off the ECN flags, (b) Look for SYN-ACK bits set (c) Define your network's source range (d) Various text processing for statistics as needed
+tcpdump -nt -r <filename> 'tcp[13] & 0x3f = 0x12 and src net 170.129.0.0/16' | cut -d ' ' -f 2 | cut -d . -f 5 | sort -V | uniq -c | wc -l
+
+2. Find me the attempted TCP connections destined to external hosts?
+# (a) Define packets going out with SYN bit set (b) define and exclude my network's internal ranges
+tcpdump -nt -r <filename> 'tcp[13] = 0x02 and dst net not 192.168.0.0/16 and dst net not 10.200.200.0/24 and dst net not 172.16.0.0/12' | wc -l
