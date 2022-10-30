@@ -1,1 +1,20 @@
+@@@@@@@@@
+@ Snort @
+@@@@@@@@@
 
+$ snort --help          # Good old help
+$ snort -?              # Command option help
+$ snort --help-config 
+
+# Test the config
+$ snort -c <config file> -T
+
+# Run snort with configuration file, read from pcap, set to fast alerts
+$ snort -c snort.lua -r ../sample.pcap -A alert_fast -q
+
+# Print to logging file
+$ snort -c snort.lua -r ../sample.pcap -A alert_fast -q -l <logging dir> --lua "alert_fast = { file = true }"
+
+# Print in format with events and packets
+$ snort -c snort.lua -r ../sample.pcap -A unified2 -q -l <logging dir>
+$ u2spewfoo <logging dir>/output.txt                                            # Read the alert with dumped packet

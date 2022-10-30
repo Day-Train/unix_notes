@@ -28,3 +28,17 @@ Option 3:
 
 # Consider "Prepare as Filter" to create your expression without applying it, whereas "Apply as Filter" does total processing and can be more expensive
 
+##########
+# tshark #
+##########
+
+# Display fields generally...
+$ tshark -r <pcap> -Y <display filter> -T fields -e <field to display> [-e <field to display>...]
+
+# Filter for tcp port 25 (SMTP), display tcp stream numbers
+$ tshark -r <pcap> -n -Y 'tcp.port == 25' -T fields -e tcp.stream | uniq
+
+# Follow a particular TCP stream
+$ tshark -r <pcap> -n -q -z follow,tcp,ascii,9 | more
+
+$ tshark -r <pcap> -n -q -z http,tree
