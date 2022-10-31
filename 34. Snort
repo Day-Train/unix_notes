@@ -18,3 +18,33 @@ $ snort -c snort.lua -r ../sample.pcap -A alert_fast -q -l <logging dir> --lua "
 # Print in format with events and packets
 $ snort -c snort.lua -r ../sample.pcap -A unified2 -q -l <logging dir>
 $ u2spewfoo <logging dir>/output.txt                                            # Read the alert with dumped packet
+
+###############
+# Snort Rules #
+###############
+
+# Basic syntax
+<action> <protocol> <src ip> <src prt> <direction> <dst ip> <dst port> [options]
+
+Action:
+    I. alert, pass, log, activate, dynamic (IDS mode)
+    II. drop, sdrop, reject (IPS mode)
+
+Protocol: ip, tcp, udp, icmp...
+
+# Example
+alert tcp $EXTERNAL_NET any -> 192.168.1.1 4444
+
+# Options
+(<keyword>:<argument>;[<keyword>:<argument>;])
+
+Keywords: msg, sid, rev, reference, content...
+
+# Example
+alert tcp $EXTERNAL_NET any -> 192.168.1.1 4444 (msg:"Meterpreter";content:".msi";content:"|90 90|";sid:1000001;rev:1;reference:cve,CVE-2022-1234;)
+
+# Optimizing rules - Content searches can optionally look at specific starting positions, offsets, and distances
+# Example
+content:"Microsoft Windows", offset 0, depth 17;                  # Look for string "Microsoft Windows", beginning at offset 0 in data payload, if you get to offset 17 bytes and haven't found it stop
+content:"Copyright |28|c|29|", distance 0, within 34;             # Look for string "Copyright (c)", immediately following last hit (see rule above), if you go past 34 bytes and haven't found it stop
+content:"Microsoft Corporation", distance 6, within 21;           # Same reasoning as above
