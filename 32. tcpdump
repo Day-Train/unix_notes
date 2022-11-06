@@ -8,7 +8,6 @@
 # Consider filtering for "tcp" vs. the ip offset ip[9] = 6
 $ tcpdump -r wireshark-df.pcap -nt -vv ip[9]=6
 
-
 # General Filters
 <protocol header> [offset: length] <relation> <value>       # note that length is treated in bytes
 ip[9] = 0x1             # Filter where protocal is icmp
@@ -17,7 +16,6 @@ udp[4:2] > 0            # Filter where UDP datagram length greater than 0
 icmp[0] = 0x03 && icmp[1] = 0x01    # Filter where "network unreachable" && "host unreachable
 dst host 192.168.2.109 # Filter in decimal
 dst host 0xc0a8026d     # Filter in hex
-
 
 ##############
 # Bitmasking #
