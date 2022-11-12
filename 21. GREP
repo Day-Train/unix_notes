@@ -1,4 +1,47 @@
-# TODO
+@@@@@@@@
+@ GREP @
+@@@@@@@@
+
+# General usage, grep from file
+$ grep [Option] <patterns> [File]
+
+# Pipe to grep
+$ cat file.txt | grep ...
+
+# Helpful options
+
+-v      # Invert grep, print non-matching lines
+-o      # Print only matching text, not full lines
+-E      # Extended, interpret patterns as REGEX
+
+
+@@@@@@@@@
+@ REGEX @
+@@@@@@@@@
+
+# Metacharacters
+
+*   Match zero or more of previous
+[]  Describe a set
+^   Match the beginning of line
+$   Match end of line
+?   Match zero or one of previous ("it's optional")
++   Match one or more of previous
+.   Match any character
+^[^0-9]     Special case: the second "^" is a NOT operator. In this case match line starting with NOT a number
+
+# Examples
+.*          # Match zero or more of any character
+A+          # Match one or more capital "A"
+.+          # Match one or more of any character
+[aeiou]+    # Match one or more vowels
+
+# Anchors
+^[aeiou]+   # Match one or more vowels at the beginning of the line
+[aeiou]+$   # Match one or more vowels at the end of the line
+
+# Consider the searches for URLs
+https?://   # Matches both http and https by making "s" optional
 
 # grep for IP addresses from a file:
 $ grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}" <file>
