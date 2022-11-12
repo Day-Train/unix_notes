@@ -1,0 +1,109 @@
+@@@@@@@@
+@ SiLK @
+@@@@@@@@
+
+#########################
+# Interacting with SiLK #
+#########################
+$ rwfilter <options> | rwcut <options>
+$ rwfilter --type=all --start-date '2019/05/01:00:00:00' --end-date '2019/05/04:00:00:00' --proto=0-255 --pass=stdout | rwcut
+
+# Getting summary statistics
+$ rwfilter <options> | rwstats --count <count> --fields <fields>
+
+# Note mandatory features
+--type                  # directionality of traffic, use "all" as a shortcut
+    # Type field values, note the concept of inbound and outbound is set by how you define your internal network!
+    in                  # Inbound
+    out                 # Outbound
+    inweb               # Inbound HTTP
+    outweb              # Outbound HTTP
+    inicmp              # Inbound ICMP
+    outicmp             # Outbound ICMP
+    int2int             # Internal to Internal
+    ext2ext             # External to External
+    innull/outnull      # Blocked In/Outbound
+    other               # Other
+
+--start-date/end-date   # start/end date, SiLK must have dates or else defaults to last hour of data
+--proto                 # protocols, select 0-255 for all
+--pass/fail             # What to do with everything that does/doesn't meet this criteria (pipe to stdout)
+
+# Non-mandatory but useful options
+--flags-all                     # All flags seen in flow
+--flags-initial                 # Initial flags
+                                # Note that flags uses its own bitmask convention
+                                # Example: --flags-initial=S/SA                 # Bitmask for SYN-ACK, look for SYN --> tcp[13] & 0x12 = 2
+--any-address=<IP Address>      # Filter flows containg address
+--scidr=<CIDR range>            # Filter by CIDR range, comma-separate for multiple subnets
+
+$ rwcut --fields dip,bytes,sip          # Specify fields by name
+$ rwcut --fields 1-15,20-29             # Specify fields by number
+
+# NetFlow Fields
+
+    sip/dip             # Source/Destination IP  
+    sport/dport         # Source/Destination Ports
+    protocol            # IP Protocol
+    packets             # # Packets
+    bytes               # # Bytes
+    stime/etime         # Start/End time
+    duration            # Duration
+    sensor              # Sensor Name
+    type/class          # Sensor type/class
+    application         # Content
+    stype/dtype         # Address type
+    scc/dcc             # Country code
+    nhip                # IPv6 Next Hop
+    flags               # Aggregate TCP flags, allows you to look at traffic state. Multiple flags fields initial flags (flags seen in first packet seen in flow) vs. aggregate flags
+    itype/icode         # ICMP type and code
+
+# Example: Find flows related to TCP port 443:
+$ rwfilter --type=all --start-date YYYY/MM/DD --end-date YYYY/MM/DD --proto=6 --dport=443 --pass=stdout | rwcut fields sip,sport,dip,sport,packets,bytes --no-columns | less
+
+# Example: Find flows that are not UDP port 53:
+$ rwfilter --type=all --start-date YYYY/MM/DD --end-date YYYY/MM/DD --proto=17 --aport=0-52,54-255 --pass=stdout | rwcut fields sip,sport,dip,sport,packets,bytes --no-columns | less
+
+# Example: Combine pass and fail to find outbound flows. First we define internal network CIDRs and determine matching traffic, then pipe that to a filter that looks for internally defined destination ranges and filters them out. 
+$ rwfilter --type=all --start-date --end-date --scidr=10.0.0.0/8,172.28.0.0/16 --proto=6 --pass=stdout | rwfilter --scidr=10.0.0.0/8,172.28.0.0/16 --fail=stdout --input-pipe=stdin | rwcut --fields ...
+
+######################
+# NetFlow Statistics #
+######################
+
+###########
+# rwstats #
+###########
+# Example: Give me the most frequent Source IPs. Find all traffic from date range, bin it by arbitrary field (in this case source IP), and display top 5:
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --pass=stdout | rwstats --fields=sip --count=5
+
+# Example: Give me the most frequent INTERNAL Source IPs. Find all traffic from date range, bin it by arbitrary field (in this case source IP), and display top 5:
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwstats --fields=sip --count=5
+
+# Example: Give me the most frequent EXTERNAL source IPs. Find all traffic whose source is INTERNAL, pass that through a fail condition and pipe to rwstats:
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --fail=stdout | rwstats --fields=sip --count=5
+
+# Example: Give me the Source IPs to Destination Ports. Similar to above, we create a bin of source IP and Destination Port. Which hosts connect to which ports most frequently:
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwstats --fields=sip,dport --count=5
+
+# Example, ask NetFlow to prioritize by value, in this case bytes. Which host sent the most bytes?
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwstats --fields=sip --bytes --count=5
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwstats --fields=sip --value=bytes --count=5
+
+##########
+# rwuniq #
+##########
+# Example: Show me the unique number of records by protocol
+$ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwuniq --fields=proto
+
+###########
+# rwcount #
+###########
+# Print traffic summary across time
+$ rwfilter --type=all --start-date 2022/02/08 --end-date 2022/07/03 --proto=0-255 --pass=stdout  | rwcount | head
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@ Converting from Packets to NetFlow @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+$ <source of packets> | rwp2yafsilk --in=-  --out=file.silk

@@ -1,0 +1,30 @@
+#######
+# cut #
+#######
+
+$ cat <file> | cut -d <delimiter> -f <field(s) to display>
+
+########
+# uniq #
+########
+
+$ uniq -c       # Print number of occurrences 
+
+########
+# sort #
+########
+
+$ sort -n       # Dumb numeric sort
+
+$ sort -V       # Version sort, smarter numeric sort
+
+$ sort -r       # Reverse output order (e.g. low to high instead of high to low)
+
+#############
+# pipelines #
+#############
+
+# Example file.txt, print first IP address
+192.168.1.1:49001 -> 172.16.1.1:80
+$ cat file.txt | cut -d ' ' -f 1 | cut -d . -f 1-4
+>>> 192.168.1.1

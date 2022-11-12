@@ -18,3 +18,7 @@ $ zeek -r <pcap>
 
 # Shot uniquely visited websites
 $ cat http.log | zeek-cut host | sort | uniq -c
+
+#######################
+# Scripting with Zeek #
+#######################
