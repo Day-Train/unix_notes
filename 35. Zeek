@@ -1,0 +1,20 @@
+@@@@@@@@
+@ Zeek @
+@@@@@@@@
+
+#####################
+# Reading Zeek Logs #
+#####################
+
+# Print desired fields
+$ cat ./http.log | zeek-cut <field1[ field2 ...fieldn]
+$ cat ./conn.log | zeek-cut ts uid id.orig_h id.orig_p id.resp_h id.resp_p proto
+
+# Print timestamps in UTC, human readable
+$ cat ./whatever.log | zeek-cut -u ts
+
+# Create zeek logs
+$ zeek -r <pcap>
+
+# Shot uniquely visited websites
+$ cat http.log | zeek-cut host | sort | uniq -c

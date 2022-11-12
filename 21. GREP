@@ -1,1 +1,4 @@
 # TODO
+
+# grep for IP addresses from a file:
+$ grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}" <file>

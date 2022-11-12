@@ -42,3 +42,6 @@ $ tshark -r <pcap> -n -Y 'tcp.port == 25' -T fields -e tcp.stream | uniq
 $ tshark -r <pcap> -n -q -z follow,tcp,ascii,9 | more
 
 $ tshark -r <pcap> -n -q -z http,tree
+
+# Show uniquely visited websites
+$ tshark -r split_web_00000_20190501124157.pcap -n -e 'http.host' -Y 'http.host' -Tfields | sort | uniq -c | sort -n | wc -l
