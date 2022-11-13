@@ -41,6 +41,9 @@ ip[0] & 0x0f > 0x5  # Solution!
 tcp[13] = 0x02  # SYN bit only set
 tcp[13] = 2     # ...in decimal
 
+# SYN ACK bits set, ignoring ECN bits
+tcp[13] & 0x3f = 0x12
+
 tcp[13] = 0x18  # ACK and PUSH only set
 tcp[13] = 24    # ...in decimal
 
