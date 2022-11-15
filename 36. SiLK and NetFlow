@@ -26,7 +26,7 @@ $ rwfilter <options> | rwstats --count <count> --fields <fields>
     other               # Other
 
 --start-date/end-date   # start/end date, SiLK must have dates or else defaults to last hour of data
---proto                 # protocols, select 0-255 for all
+--proto                 # protocols, select 0-255 for all (List of protocols here: https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml)
 --pass/fail             # What to do with everything that does/doesn't meet this criteria (pipe to stdout)
 
 # Non-mandatory but useful options
@@ -94,6 +94,8 @@ $ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scid
 # rwuniq #
 ##########
 # Example: Show me the unique number of records by protocol
+$ rwuniq file.silk --fields proto
+
 $ rwfilter --type=all --start-date=<DATE> --end-date=<DATE> --proto=0-255 --scidr=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 --pass=stdout | rwuniq --fields=proto
 
 ###########

@@ -1,1 +1,10 @@
-# TODO
+# Convenient Utilities
+
+# capinfos - print information about capture fields
+$ capinfos file.pcap
+
+# editcap - edit or translate capture files
+$ editcap -c 1000 web.pcap output.pcap      # Read first 1000 packets and push them to output file
+
+# mergecap - merge two or more capture files
+$ mergecap -w outfile.pcap infile1.pcap infile2.pcap...infilen.pcap
