@@ -8,6 +8,12 @@
 $ rwfilter <options> | rwcut <options>
 $ rwfilter --type=all --start-date '2019/05/01:00:00:00' --end-date '2019/05/04:00:00:00' --proto=0-255 --pass=stdout | rwcut
 
+# Read from silk file
+$ rwfilter file.silk <options>
+
+# Read from stdin (e.g. output from one rwfilter into new rwfilter)
+$ rwfilter <options> --pass=stdout | rwfilter --input-pipe=stdin <options>
+
 # Getting summary statistics
 $ rwfilter <options> | rwstats --count <count> --fields <fields>
 
@@ -36,6 +42,11 @@ $ rwfilter <options> | rwstats --count <count> --fields <fields>
                                 # Example: --flags-initial=S/SA                 # Bitmask for SYN-ACK, look for SYN --> tcp[13] & 0x12 = 2
 --any-address=<IP Address>      # Filter flows containg address
 --scidr=<CIDR range>            # Filter by CIDR range, comma-separate for multiple subnets
+                                # Ex: --scidr=10.10.10.0/24 OR --scidr=10.10.10.1,10.10.10.2
+--saddress                      # Filter for specific Source IP Address
+                                # Ex: --saddress=192.168.1.1
+--input-pipe                    # Define input
+                                # Ex: --input-pipe=stdin
 
 $ rwcut --fields dip,bytes,sip          # Specify fields by name
 $ rwcut --fields 1-15,20-29             # Specify fields by number
