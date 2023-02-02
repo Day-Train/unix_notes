@@ -1,15 +1,19 @@
 $ awk -F<Delimiter> ' [/<string to match>/] { print [OPTIONS] } ' <input file>
 
 Usage
+	
 	Consider grep
 		# Grep the string 'friend' from the file /etc/group, printing matching lines
 		$ grep friend /etc/group
 		-->result
+	
 	Achieve similar behaviour with awk
 		# Search for the pattern 'friend' from the file /etc/group, printing matching lines
 		$ awk ' /friend/ { print } ' /etc/group
-		
-	Formatting
+	
+	##############	
+	# Formatting #
+	##############
 		Rows
 			# prints only the first 3 rows
 			$ awk -F: ' NR==1,NR==3 { print } ' /etc/group
@@ -17,13 +21,21 @@ Usage
 		Columns and delimiters
 			# Parse a comma-delimited file and print columns one and three
 			$ awk -F, ' { print $1, $3} ' hello.txt
-	Functions
+	
+	#############
+	# Functions #
+	#############
+		
 		Match
 			# Parse this is a colon-delimited file, look for the pattern 'friend' in the fourth element only but print the whole line
 			$ awk -F: ' match($4,/friend/) { print } ' /etc/group
 		Print
 			# As above but but print only the first field in lieu of full line output
 			$ awk -F: 'match($4,/friend/) { print $1 }' /etc/group
+
+			# You can pipe, and manipulate arbitrary text 
+			$ cat subdomains.txt | awk '{ print $1".google.com" }'
+
 		printf -> awk has printf!
 			# uses similar formatting arguments as standard library function
 			# prints a left-justified (by 8 characters) string and a right justified (by 3 characters) number passed through as columns 1 and 3 respectively.
