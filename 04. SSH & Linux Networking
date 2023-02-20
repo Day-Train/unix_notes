@@ -1,50 +1,71 @@
-SSH
+##############
+# SSH Basics #
+##############
 	syntax:
-		$ssh username@servernamename
-		$ssh username@192.0.0.1
-		$ssh servername --> will use your current username e.g.  if I'm 'alex' on client machine it will attempt alex@servername
-		$ssh -p <port #> username@servernamename
-		Ctrl-D --> logout
+		$ ssh username@servernamename
+		$ ssh username@192.0.0.1
+		$ ssh servername # will use your current username e.g.  if I'm 'alex' on client machine it will attempt alex@servername
+		$ ssh -p <port #> username@servernamename
+		Ctrl-D # logout
 	configuration
 		openssh-server
 		/etc/ssh/sshd_config
 	public/private keygeneration
 		(client) ssh-keygen -t rsa [-b 4096]
 		(client) enter pretty strong passphrase
-		(client --> server) need to copy public key (.pub) to server device
+		(client # server) need to copy public key (.pub) to server device
 			scp [path]/id_rsa.pub username@clientname:/[server path]
 		(server) ~/.ssh/authorized_keys (make sure chmod 700!)
-		(server) cp id_rsa.pub --> authorized_keys (or echo into it for multiple keys)
+		(server) cp id_rsa.pub # authorized_keys (or echo into it for multiple keys)
 		(server) In order to turn off Password Auth
-			1. ChallengeResponse... --> no
-			2. PasswordAuthentic... --> no
-			3. UsePam... --> no
+			1. ChallengeResponse... # no
+			2. PasswordAuthentic... # no
+			3. UsePam... # no
 			(BONUS! set listening port to 443 or 80)
 		(server) sudo service ssh restart
-SOX Proxy
-	Per above --> enable ssh and browser settings (in Firefox Advanced->Network->Settings->Manual Proxy)
+
+##############
+# SSH Server #
+##############
+	$ sudo systemctl start sshd					# Start SSH Server
+	$ sudo systemctl enable sshd.service		# Enable SSH as a service on boot
+
+#############
+# SOX Proxy # 
+############# 
+
+	Per above # enable ssh and browser settings (in Firefox Advanced->Network->Settings->Manual Proxy)
 	Setup Tunnel 
-		--> (client) ssh -N (no loging) -D (bind to port) 8080 username@servername -p (server port) 22
-		--> (server) Browser set to SOCKS Host 127.0.0.1 port 8080
-SSH Aliases
-	/etc/ssh/ssh_config --> general client config (NOT the same as sshd_config)
+		# (client) ssh -N (no loging) -D (bind to port) 8080 username@servername -p (server port) 22
+		# (server) Browser set to SOCKS Host 127.0.0.1 port 8080
+
+###############
+# SSH Aliases #
+###############
+
+	/etc/ssh/ssh_config # general client config (NOT the same as sshd_config)
 	can create a separate user config file 
-		--> .ssh/config (may not exist by default)
+		# .ssh/config (may not exist by default)
 	man ssh_config
-Networking
-	$ifconfig --> display network interfaces, from the perspective of their software 
-		confgiuration, defaults to exclude down interfaces
-		$ifconfig -a --> display all network interfaces, including down
-		$ifconfig <name> --> display information about particular network interface
-	$ethtool <name> --> display information about the named hardware device
+
+##############
+# Networking #
+##############
+	
+	$ ifconfig 											# display network interfaces, from the perspective of their software confgiuration, defaults to exclude down interfaces
+	$ ifconfig -a 										# display all network interfaces, including down
+	$ ifconfig <name> 									# display information about particular network interface
+	$ ip address										# Alternative to ifconfig
+	$ ethtool <name> 									# display information about the named hardware device
 		supported link modes: support transfer rates (e.g. 100baseT = 100Mb/s)
 		link partner advertised link modes: as above for partner
 		speed: the maximum transfer rate supported by both the link and partner
 		link detected: is it plugged in?
-	$iwconfig --> configure wireless interfaces
-	$ethtool -s <key1> <value1> <keyn> <valuen> --> configure device (e.g. ethtool -s 
-		speed 100 duplex full)
+
+	$ iwconfig 											# configure wireless interfaces
+	$ ethtool -s <key1> <value1> <keyn> <valuen> 		# configure device (e.g. ethtool -s speed 100 duplex full)
+
 	Address Resolution Protocol (ARP) - IPv4 protocol to map network IP address to hardware
 		 addresses
-		--> When you connect (i.e. ssh) into an IP address that has to be resolved to a 
+		# When you connect (i.e. ssh) into an IP address that has to be resolved to a 
 			hardware (physical) address. ARP does this.
