@@ -1,35 +1,37 @@
 #tmux is an interactive terminal multiplexer and command line productivity utility
 #To pass commands to tmux enter the prefix Ctrl-B followed by <command>
 
-$ tmux							#start tmux session
+$ tmux							# Start tmux session
 
-$ Ctrl-b ? 						#display hotkeys
-$ Ctrl-b c 						#creates new window
-$ Ctrl-b , 						#command to rename window
-$ Ctrl-b x 						#exit current pane, window, session
-$ Ctrl-b d 						#detach from session
-$ Ctrl-b s 						#display sessions
-$ Ctrl-b [0-9] 						#go to window # specified
-$ Ctrl-b [p|n] 						#cycles through previous or next window
-$ Ctrl-b w 						#lists windows
-$ Ctrl-b % 						#splits window vertically
-$ Ctrl-b : 						#opens command line to pass named commands to tmux
+# Convenience Commands
+[tmux]> Ctrl-b ? 					# Display hotkeys
+[tmux]> Ctrl-b c 					# Create new window
+[tmux]> Ctrl-b , 					# Command to rename window
+[tmux]> Ctrl-b x 					# Exit current pane, window, session
+[tmux]> Ctrl-b d 					# Detach from session
+[tmux]> Ctrl-b s 					# Display sessions
+[tmux]> Ctrl-b <0-9> 					# Go to window <#> specified
+[tmux]> Ctrl-b [p|n] 					# Cycle through previous or next window
+[tmux]> Ctrl-b w 					# List windows
+[tmux]> Ctrl-b % 					# Split window vertically
 
-#example: 
-$ Ctrl-B : 						#then split-window will split window horizontally
+# Named Commands
+[tmux]> Ctrl-b :<COMMAND> [OPTIONS]			# Opens command line then pass named commands to tmux
+[tmux]> Ctrl-B :split-window				# Explicit command to split window horizontally
+[tmux]> Ctrl-B :rename-window MyWindow			# Explicit command to rename window
 	
-#Session Management
-$ tmux new -s <mysession> 				#create a new session with name <mysession>
-$ Ctrl-B d 						#detach from session and return to shell
-$ tmux list-sessions 					#list sessions
-$ tmux attach -t <mysession> 				#reattach to detached session
+# Session Management
+$ tmux new -s <SESSION_NAME>				# Create a new session with name <SESSION_NAME>
+[tmux]> Ctrl-B d					# Detach from session and return to shell
+$ tmux list-sessions 					# List sessions
+$ tmux attach -t <SESSION_NAME>				# Reattach to detached session
 	
-#Navigation
-$ Ctrl-b [Arrow Key] 					#navigate around panes
-$ Ctrl-b [Page Up|Page Down] 				#scroll up/down
+# Navigation
+[tmux]> Ctrl-b [Arrow Key] 				# Navigate around panes
+[tmux]> Ctrl-b [Page Up|Page Down] 			# Scroll up/down
 
-#Copy-mode (with vi-keys enabled)
-$ Ctrl-b [ 						#Enter copy mode
-$ Space Bar 						#Begin copy selection
-$ Enter Key 						#Make selection and exit copy-mode
-$ Ctrl-b ] 						#Paste from paste buffer
+# Copy-mode (with vi-keys enabled)
+[tmux]> Ctrl-b [ 					# Enter copy mode
+[tmux]> Space Bar 					# Begin copy selection
+$ Enter Key 						# Make selection and exit copy-mode
+[tmux]> Ctrl-b ] 					# Paste from paste buffer
