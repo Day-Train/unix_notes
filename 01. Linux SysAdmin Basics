@@ -1,118 +1,127 @@
-#TODO
-#What does !<command> do in shell?
-#What are restricted commands (rbash) in shell?
+# TODO
+# What does !<command> do in shell?
+# What are restricted commands (rbash) in shell?
 
 # What's going on?
-$ top						#Display Linux processes
-$ htop						#Interactive, more powerful variant of $top if you have it installed
-$ ps [aux]					#Display information about active processes, [aux] displays every process
-$ netstat [-tupln]				#Utility for displaying IP connections, -t TCP, -u, UDP, -p enable selection of specified protocols
-$ man <command>					#Display manual pages for <command>
-$ cat <file.txt>				#Print contents of file to screen					
-$ echo <string>					#Echo string			
+$ top						# Display Linux processes
+$ htop						# Interactive, more powerful variant of $top if you have it installed
+$ ps [aux]					# Display information about active processes, [aux] displays every process
+
+	$ ps aux				# a (all with tty), u (user-formatted), x (processes w/out tty)
+	$ ps -elfH				# -e (all processes), -l (long format), -f (full with command line), -H (show hierarchy)
+
+$ netstat [-tupln]				# Utility for displaying IP connections, -t TCP, -u, UDP, -p enable selection of specified protocols
+$ man <command>					# Display manual pages for <command>
+$ cat <file.txt>				# Print contents of file to screen					
+$ echo <string>					# Echo string			
 $ idlinu
-$ history					#Display command history
-$ whoami					#Display current user
-$ who						#Display information about currently logged in users
-$ w						#As above but also includes their processes
-$ lsof 						#List of open files (see below)
-$ printenv					#List environment variables
+$ history					# Display command history
+$ whoami					# Display current user
+$ who						# Display information about currently logged in users
+$ w							# As above but also includes their processes
+$ lsof 						# List of open files (see below)
+$ env						# Envrionment variables
+$ printenv					# List environment variables
 	
-#What's the current kernel version?
-	$ uname -a
-	$ uname --> print out system information
+# What's the current kernel version?
+	$ uname -a									# Print all system infromation
+	$ uname 									# Print only kernel name
 	
-#What's the machine's IP address?
+# What's the machine's IP address?
 	$ ifconfig
-	$ ip [addr | address] show [device=eth0,...]
+	$ ip addr
+	$ ip <addr | address> show [device=eth0,...]
 	
-#How do you check for free disk space?
+# How do you check for free disk space?
 	$ df -ah
 	
-#How do see if a service is running? Start it, stop it?
-	$ service [service name] [status | stop | start | enable | disable ... ] 	#Older way of doing it
-	$ systemctl [status | stop | start | ... ] [service name] 			#Newer way using systemd
+# How do see if a service is running? Start it, stop it?
+	$ service [service name] [status | stop | start | enable | disable ... ] 		# Older way of doing it
+	$ systemctl [status | stop | start | ... ] [service name] 						# Newer way using systemd
 	
-#How would you check the size of a directory's contents on disk?
+# How would you check the size of a directory's contents on disk?
 	$ du -sh [directory name]
 	
-#How would you check for open ports on a Linux machine?
+# How would you check for open ports on a Linux machine?
 	$ netstat [-t (TCP) -u (UDP) -l (listening) -p (process) -n (numeric)]
-	#execute as root (sudo) to display PID/Program name (normally hidden)
+	# Execute as root (sudo) to display PID/Program name (normally hidden)
+
+	# Preferred
+	# sudo netstat -auntp
 	
-#How do you check CPU usage for a given process
+# How do you check CPU usage for a given process
 	$ ps aux | grep [process name]
 	
-#How would you mount a new volume?
+# How would you mount a new volume?
 	$ mount /dev/sda2 /mnt (mount the second partition of the drive on mount point mnt)
 	
-#If you need to automatically mount a volume at boot where do you look?
+# If you need to automatically mount a volume at boot where do you look?
 	$ less /etc/fstab
 	
-#How do you look something up you don't know?
+# How do you look something up you don't know?
 	$ man [command]
 	$ man -k [thing]
 	$ apropos [thing]
 	
-#What shell am I using, how do I temporarily change my shell? permanently?
+# What shell am I using, how do I temporarily change my shell? permanently?
 	$ echo $SHELL
 	$ [shell name]
-		ex: $ bash 						#Switches to bash
-		ex: $ zsh 						#Switches to zsh
-	#To switch permanently use chsh command (see below)
+		ex: $ bash 						# Switches to bash
+		ex: $ zsh 						# Switches to zsh
+	# To switch permanently use chsh command (see below)
 	
-#How do I start a login shell, logout?
-	$ su -l <user>							#Note: can login as yourself again as well
-	$ <Ctrl-d> 							#Logout
+# How do I start a login shell, logout?
+	$ su -l <user>							# Note: can login as yourself again as well
+	$ <Ctrl-d> 							# Logout
 	
-#Navigation
-$ cd [<directory>, ., .., ~]					#Change to specified directory, or home if no arguments passed
-$ ls [-alh]							#Display contents of PWD, -a include hidden, -l verbose detail, -h human readable
-$ PWD 								#Current working directory
-$ OLDPWD							#Previous working directory!
-$ su 								#Change user id or become superuser
-$ less								#Like cat but only print lines at a time
-$ more 								#Crappier version of less
-$ head 								#First ten lines
-$ tail	 							#Last ten lines
-$ clear 							#Clears screen
-$ <Ctrl-l> 							#Same as clear
-$ find	 							#Search in directory structure
+# Navigation
+$ cd [<directory>, ., .., ~]					# Change to specified directory, or home if no arguments passed
+$ ls [-alh]							# Display contents of PWD, -a include hidden, -l verbose detail, -h human readable
+$ PWD 								# Current working directory
+$ OLDPWD							# Previous working directory!
+$ su 								# Change user id or become superuser
+$ less								# Like cat but only print lines at a time
+$ more 								# Crappier version of less
+$ head 								# First ten lines
+$ tail	 							# Last ten lines
+$ clear 							# Clears screen
+$ <Ctrl-l> 							# Same as clear
+$ find	 							# Search in directory structure
 	ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
-$ <Ctrl-r> 							#Search Ctrl
-$ <Ctrl-a> 							#Beginning of command line
-$<Ctrl-e> 							#End of command line
-$ <Tab> 							#Autocompletion
-$ which bash							#Which shell am I using?
-$ <Ctrl-+> 							#Zoom In
-$ <Ctrl-Shift-+> 						#Zoom Out
+$ <Ctrl-r> 							# Search Ctrl
+$ <Ctrl-a> 							# Beginning of command line
+$<Ctrl-e> 							# End of command line
+$ <Tab> 							# Autocompletion
+$ which bash							# Which shell am I using?
+$ <Ctrl-+> 							# Zoom In
+$ <Ctrl-Shift-+> 						# Zoom Out
 
-#Creation & Destruction
-$ touch <filename>						#Create file, if file exists update timestamp
-$ mkdir <directory name>					#Create directory
-$ mv <filename1> <filename2>					#Move file, if no path specified renames file
-$ cp <filename1> <filname2>					#Copy file							
-$ rm <filename>							#Delete file		
-$ rmdir <directory name>					#Delete directory
-$ ln <target> <link name>					#Create link to target with link name, -s sym-link
-#Search, Sort, Filter & Count
+# Creation & Destruction
+$ touch <filename>						# Create file, if file exists update timestamp
+$ mkdir <directory name>					# Create directory
+$ mv <filename1> <filename2>					# Move file, if no path specified renames file
+$ cp <filename1> <filname2>					# Copy file							
+$ rm <filename>							# Delete file		
+$ rmdir <directory name>					# Delete directory
+$ ln <target> <link name>					# Create link to target with link name, -s sym-link
+# Search, Sort, Filter & Count
 	$ grep
 	$ wc
 	$ uniq
 	$ cut
 	
-#Shell variables
-	$ echo $<Tab Button? 					#Autocomplete to see all the hundreds of shell variables
-	$ env							#Print the environment variables 
+# Shell variables
+	$ echo $<Tab Button? 					# Autocomplete to see all the hundreds of shell variables
+	$ env							# Print the environment variables 
 	
-#Pipes, redirection, stdin, stdout, and stderr
-		$ <command1> > <command2> 			#Direct input/output
-		#where 0 = stdin, 1 = stdout, 2 = stderr
-		#example:
-		$ echo "Hello World" 1> file.txt #directs text Hello World into file, will create file if not present
-		#As a shorthand 1> is the same as >
-		#Note that this will overwrite existing text in file. To append use >> instead
-		#/dev/null discard location... ex. if you have a command that may through a number of errors you don't care about you can pipe STDERR to /dev/null
+# Pipes, redirection, stdin, stdout, and stderr
+		$ <command1> > <command2> 			# Direct input/output
+		# where 0 = stdin, 1 = stdout, 2 = stderr
+		# example:
+		$ echo "Hello World" 1> file.txt # directs text Hello World into file, will create file if not present
+		# As a shorthand 1> is the same as >
+		# Note that this will overwrite existing text in file. To append use >> instead
+		# /dev/null discard location... ex. if you have a command that may through a number of errors you don't care about you can pipe STDERR to /dev/null
 		$ find / -name 2> /dev/null
 	&& conditional AND execute command on successful return of previous command
 		touch:
@@ -123,13 +132,20 @@ $ ln <target> <link name>					#Create link to target with link name, -s sym-link
 			reads file to output, greps for alex, and returns a count of matching lines
 	|| conditional OR
 	
-#Debian package Management
+# Debian package Management
+	# Preferred
+	$ apt install <package>
+	$ apt show <package>
+	$ apt update
+	$ apt upgrade
+
+	# OLD
 	$ apt-get install
 	$ apt-get update
 	$ apt-get upgrade
 	Adding repos
 	
-#User Account Management
+# User Account Management
 	$ chsh -s [/path/to/shell] [user - blank if it's you!]
 		$ chsh -s /bin/zsh bob
 	$ sudo [-i]
@@ -141,12 +157,6 @@ $ ln <target> <link name>					#Create link to target with link name, -s sym-link
 		/etc/passwd --> user account info
 		/etc/shadow --> stores hashed passwords
 		/etc/shells --> available shells (available user shells can be added/removed here without deleting the shell)
-		
-File Permissions
-	$chmod
-	$chown [permission bits] [owner:[group]] [file]
-		$chown 700 alex ~/file.txt
-	$chgrp
 	
 UNIX Permissions
 	Value		Permission						Directory Listing
@@ -173,6 +183,16 @@ Symbolic Permissions
 	(permission)		x			Execute
 	(permission)		t			Sticky bit
 	(permission)		s			Set UID or GID
+
+Changing File Permissions
+	$ chmod
+	$ chmod o+x test.txt								# Set other execute permission additively
+	$ chmod o=r-- test.txt								# Set other read permission explicitly
+	
+	$ chown [permission bits] [owner:[group]] [file]
+	$ chown 700 alex ~/file.txt							# Give all rights, set owner to 'alex'
+	$ chown -R kali:kali <directory>					# Set owner and recursively set ownership for subdirectories
+	$ chgrp
 	
 Processes & Signals
 	$ kill
@@ -235,7 +255,7 @@ Filesystem
 		various
 		/var/log is system logs
 		
-#Linux File Types
+# Linux File Types
 	permission bits have a leading character designating file type, officially 7 types
 	- (nothing) regular file
 	l link
@@ -246,19 +266,19 @@ Filesystem
 	device files - interface file where the driver communicates with the firmware i.e. meeting/intersection point where linux-side driver communicates with the hardware itself or its firmware
 	socket - communication channel that opens, only visible for the parties that uses them, private file for processes
 
-#Task scheduling with Cron
+# Task scheduling with Cron
 	crontab [-e]
 	Each user has their own cron table
 	example:
-	#(m)	(h)	(dom) (moy) (wd) (cmd)
+	# (m)	(h)	(dom) (moy) (wd) (cmd)
 	  15	 6 	 *		*	 1-5	echo "$(date): checking in." >> /var/log/mycheckin
 	  executed as at the 15th minute, of hour 6 (24-hour clock) every possible day of month, in every possible month of year on weekdays 1-5 (where 1=Monday, 7=Sunday), execute command (as interpreted by sh, note not bash)
-#Compression & Archiving on Linux
+# Compression & Archiving on Linux
 	tar -z(gzip archive)c(create archive)v(verbose)f(file) [Archive Name] [File]
 	tar -z(un-gzip extract)x(extract archive)v(verbose)f(file) [Archive Name]
-#Bash Programming
+# Bash Programming
 	() Precedence operators
-#Variables & Quoting
+# Variables & Quoting
 	$ prefixes variables, references a value
 	example:
 		myvar="Hello" creates the $myvar variable and sets it to "Hello"
@@ -269,8 +289,8 @@ Filesystem
 		echo "there are `wc -l < /etc/group` lines in the /etc/group file"
 		num_lines=`ls $HOME | wc -l`
 		echo $num_lines
-#How Bash Scripts Work
-	#!/bin/bash First line of every bash program
+# How Bash Scripts Work
+	# !/bin/bash First line of every bash program
 		shell ignores this comment but kernel knows to execute using this bash
 	.sh is convention for shell script file type
 	exit statement to exit script
@@ -285,12 +305,12 @@ Filesystem
 		source myscript.sh -> will also capture variables for session so you can recall variables
 		. myscript.sh
 		
-#Bash Arguments
-	$ # --> number of arguments that our script was run with
+# Bash Arguments
+	$ #  --> number of arguments that our script was run with
 	$ 0 --> the filename of our script
 	$ 1..$n script arguments
 	
-#Bash If & Testing
+# Bash If & Testing
 	control flow - if
 		if [ logical T/F ]; then
 			DO SOMETHING
@@ -340,26 +360,26 @@ Filesystem
 		>=
 
 		file evaluation operators
-		-d [file] 					#Exists and is a directory
-		-e [file] 					#Exists
-		-f [file] 					#Exists and is a regular file 
-		-r [file] 					#You have read permission
-		-s [file] 					#Exists and is not empty
-		-w [file] 					#You have write permission
-		[file1] -nt [file2] 				#file1 is newer than file2
-		[file1] -ot [file2] 				#file1 is older than file2
+		-d [file] 					# Exists and is a directory
+		-e [file] 					# Exists
+		-f [file] 					# Exists and is a regular file 
+		-r [file] 					# You have read permission
+		-s [file] 					# Exists and is not empty
+		-w [file] 					# You have write permission
+		[file1] -nt [file2] 				# file1 is newer than file2
+		[file1] -ot [file2] 				# file1 is older than file2
 
-#LSOF (list open files)
+# LSOF (list open files)
 	$ lsof
-	$ lsof [PATH] 						#which processes have this file open?
-	$ lsof -p [PID] 					#which files does process X have open?
-	$ lsof -p [PID] | grep bin 				#where is the binary for this process
-	$ lsof -p [PID] | grep .so 				#Which shared libraries is this program using?
-	$ lsof -p [PID] | grep log 				#Where is this thing logging to?
-	$ lsof grep [PATH/libname.so] 				#Which processes still have this old library open?
-	$ lsof -u [username] 					#Which files does user username have open?
-	$ lsof -i :[PORT] 					#which processes are listening on port id PORT
-	$ lsof -i [PROTOCOL] 					#What's listening using protocol... tcp... udp?
+	$ lsof [PATH] 						# which processes have this file open?
+	$ lsof -p [PID] 					# which files does process X have open?
+	$ lsof -p [PID] | grep bin 				# where is the binary for this process
+	$ lsof -p [PID] | grep .so 				# Which shared libraries is this program using?
+	$ lsof -p [PID] | grep log 				# Where is this thing logging to?
+	$ lsof grep [PATH/libname.so] 				# Which processes still have this old library open?
+	$ lsof -u [username] 					# Which files does user username have open?
+	$ lsof -i :[PORT] 					# which processes are listening on port id PORT
+	$ lsof -i [PROTOCOL] 					# What's listening using protocol... tcp... udp?
 	
 Shell Aliases
 	$ alias
