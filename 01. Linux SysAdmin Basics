@@ -77,8 +77,9 @@ $ printenv					# List environment variables
 # Navigation
 $ cd [<directory>, ., .., ~]					# Change to specified directory, or home if no arguments passed
 $ ls [-alh]							# Display contents of PWD, -a include hidden, -l verbose detail, -h human readable
-$ PWD 								# Current working directory
-$ OLDPWD							# Previous working directory!
+$ pwd 								# Current working directory
+$ echo $PWD
+$ echo $OLDPWD						# Previous working directory!
 $ su 								# Change user id or become superuser
 $ less								# Like cat but only print lines at a time
 $ more 								# Crappier version of less
@@ -90,11 +91,11 @@ $ find	 							# Search in directory structure
 	ex: $find . -maxdepth 2 -name "check*" --> starting with pwd as working tree recursively search for files with name pattern check* to a depth of 2 levels max
 $ <Ctrl-r> 							# Search Ctrl
 $ <Ctrl-a> 							# Beginning of command line
-$<Ctrl-e> 							# End of command line
+$ <Ctrl-e> 							# End of command line
 $ <Tab> 							# Autocompletion
-$ which bash							# Which shell am I using?
+$ which bash						# Which shell am I using?
 $ <Ctrl-+> 							# Zoom In
-$ <Ctrl-Shift-+> 						# Zoom Out
+$ <Ctrl-Shift-+> 					# Zoom Out
 
 # Creation & Destruction
 $ touch <filename>						# Create file, if file exists update timestamp
