@@ -9,7 +9,7 @@ $ grep [Option] <patterns> [File]
 $ cat file.txt | grep ...
 
 # Helpful options
-
+-i      # Ignore case
 -v      # Invert grep, print non-matching lines
 -o      # Print only matching text, not full lines
 -E      # Extended, interpret patterns as REGEX
