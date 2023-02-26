@@ -1,18 +1,18 @@
 Handy things...
 	Check the difference between local and remote
-		$git diff <local branch> <remote>/<remote branch>
+		$ git diff <local branch> <remote>/<remote branch>
 		Ex.
-			$git diff master origin/master
+			$ git diff master origin/master
 	Add an existing project to GitHub
 		[Remote]
 			Create new Repo on GitHub and copy its URL
 		[Local]
-			$git init
-			$git add .
-			$git commit -m "Initial Commit"
-			$git remote add <remote repo name i.e. 'origin'> <remote repo URL>
-			$git remote -v
-			$git push origin master
+			$ git init
+			$ git add .
+			$ git commit -m "Initial Commit"
+			$ git remote add <remote repo name i.e. 'origin'> <remote repo URL>
+			$ git remote -v
+			$ git push origin master
 	Make and email patches
-		$git format-patch <master branch> <working branch>
-		$git send-email --to <email> --cc <email>
+		$ git format-patch <master branch> <working branch>
+		$ git send-email --to <email> --cc <email>

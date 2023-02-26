@@ -1,11 +1,11 @@
 Kernel Modules
-	$kldstat --> show loaded modules
-	$kldload <module> --> load kernel modules
+	$ kldstat --> show loaded modules
+	$ kldload <module> --> load kernel modules
 
 Kernel Settings
 
-	$sysctl
+	$ sysctl
 		--> get, set or tune values from kernel (similar to proc in linux)
-	$sysctl parameter=value
+	$ sysctl parameter=value
 		--> set value for running kernel (e.g. max open files...)
 	Make permanent changes in th /etc/sysctl.conf file
