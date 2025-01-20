@@ -34,6 +34,9 @@ $ printenv					# List environment variables
 	
 # How do you check for free disk space?
 	$ df -ah
+
+# How can I see disk usage statistics?
+	$ du
 	
 # How do see if a service is running? Start it, stop it?
 	$ service [service name] [status | stop | start | enable | disable ... ] 		# Older way of doing it
